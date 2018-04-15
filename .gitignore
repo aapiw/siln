@@ -21,3 +21,9 @@
 /yarn-error.log
 
 .byebug_history
+*.zip
+#*.xlsx
+adminbsb-materialdesign
+*.note
+public/system/*
+secrets.yml

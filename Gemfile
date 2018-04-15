@@ -1,3 +1,5 @@
+ruby '2.3.4'
+
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -12,6 +14,37 @@ gem 'rails', '~> 5.1.6'
 gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+
+gem 'pg', '~> 0.18.4'
+
+# User bootstrap saass and jquery rails
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'jquery-rails'
+
+#SEO
+gem 'sitemap_generator'
+
+#auhorization
+gem 'cancancan', '~> 1.10'
+
+# Use Annotate for display the schema of database
+gem 'annotate', require: false
+
+#Development mode
+gem "awesome_print", require:"ap"
+
+# Localization to ID
+gem 'rails-i18n', '~> 5.0.0'
+
+#Authenticable
+gem 'devise', '~> 4.3'
+
+#use Paperclip as uploader
+gem 'paperclip'
+
+#Use Roo as import/export csv/excel 
+gem 'roo'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
