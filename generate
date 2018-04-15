@@ -1,6 +1,9 @@
 rails g devise:install
 rails g devise school
+rails generate devise:views users
+
 rails g model country
+
 
 rails g scaffold extension_submission school:references year:string approved_by_admin:boolean
 
