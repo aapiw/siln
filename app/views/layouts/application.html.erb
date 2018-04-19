@@ -6,9 +6,26 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
   </head>
-
-  <body>
+  
+  <body> 
+  <%#= current_school.name if school_signed_in? %>
+  
+  <%= render "layouts/sidebar" %>
+  <div id="right-panel" class="right-panel">
+    <%= render "layouts/header" %>
     <%= yield %>
+  </div><!-- /#right-panel -->
+
+  
+    <% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+
+
   </body>
 </html>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180415101539) do
+ActiveRecord::Schema.define(version: 20180415133314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,17 +60,19 @@ ActiveRecord::Schema.define(version: 20180415101539) do
   end
 
   create_table "schools", force: :cascade do |t|
-    t.string "email", default: "", null: false
+    t.string "username", default: "", null: false
+    t.string "email"
     t.string "encrypted_password", default: "", null: false
     t.string "display_password"
+    t.string "name"
+    t.datetime "remember_created_at"
     t.integer "country_id"
-    t.string "username"
     t.string "responsible_school"
     t.string "phone"
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_schools_on_email", unique: true
+    t.index ["username"], name: "index_schools_on_username", unique: true
   end
 
   create_table "sk_submissions", force: :cascade do |t|

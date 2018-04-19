@@ -18,7 +18,7 @@ gem 'puma', '~> 3.7'
 gem 'pg', '~> 0.18.4'
 
 # User bootstrap saass and jquery rails
-gem 'bootstrap-sass', '~> 3.3.6'
+# gem 'bootstrap-sass', '~> 3.3.6'
 gem 'jquery-rails'
 
 #SEO
