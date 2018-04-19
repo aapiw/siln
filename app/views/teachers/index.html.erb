@@ -1,0 +1,82 @@
+<div class="content mt-3">
+  <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Data Table</strong>
+                </div>
+                <div class="card-body">
+          <table id="bootstrap-data-table" class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Salary</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>$320,800</td>
+              </tr>
+              <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>$170,750</td>
+              </tr>
+              
+            </tbody>
+          </table>
+                </div>
+            </div>
+        </div>
+      </div>
+  </div><!-- .animated -->
+</div><!-- .content -->
+
+<p id="notice"><%= notice %></p>
+
+<h1>Teachers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>School</th>
+      <th>Sk submission</th>
+      <th>Name</th>
+      <th>Pns</th>
+      <th>Age</th>
+      <th>Period of teaching</th>
+      <th>Number of extension</th>
+      <th>Expire</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @teachers.each do |teacher| %>
+      <tr>
+        <td><%= teacher.school %></td>
+        <td><%= teacher.sk_submission %></td>
+        <td><%= teacher.name %></td>
+        <td><%= teacher.pns %></td>
+        <td><%= teacher.age %></td>
+        <td><%= teacher.period_of_teaching %></td>
+        <td><%= teacher.number_of_extension %></td>
+        <td><%= teacher.expire %></td>
+        <td><%= link_to 'Show', teacher %></td>
+        <td><%= link_to 'Edit', edit_teacher_path(teacher) %></td>
+        <td><%= link_to 'Destroy', teacher, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Teacher', new_teacher_path %>

@@ -1,0 +1,107 @@
+<%= form_with(model: sk, local: true) do |form| %>
+  <% if sk.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sk.errors.count, "error") %> prohibited this sk from being saved:</h2>
+
+      <ul>
+      <% sk.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :teacher_id %>
+    <%= form.text_field :teacher_id, id: :sk_teacher_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :year %>
+    <%= form.text_field :year, id: :sk_year %>
+  </div>
+
+  <div class="field">
+    <%= form.label :permohonan_perwakilan %>
+    <%= form.text_field :permohonan_perwakilan, id: :sk_permohonan_perwakilan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ijazah %>
+    <%= form.text_field :ijazah, id: :sk_ijazah %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sertifikat_pendidik %>
+    <%= form.text_field :sertifikat_pendidik, id: :sk_sertifikat_pendidik %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nuptk %>
+    <%= form.text_field :nuptk, id: :sk_nuptk %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sk_perwakilan %>
+    <%= form.text_field :sk_perwakilan, id: :sk_sk_perwakilan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ktp_or_paspor %>
+    <%= form.text_field :ktp_or_paspor, id: :sk_ktp_or_paspor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kk %>
+    <%= form.text_field :kk, id: :sk_kk %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cv %>
+    <%= form.text_field :cv, id: :sk_cv %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sk_inpassing %>
+    <%= form.text_field :sk_inpassing, id: :sk_sk_inpassing %>
+  </div>
+
+  <div class="field">
+    <%= form.label :biodata_ln %>
+    <%= form.text_field :biodata_ln, id: :sk_biodata_ln %>
+  </div>
+
+  <div class="field">
+    <%= form.label :form_biaya %>
+    <%= form.text_field :form_biaya, id: :sk_form_biaya %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pernyataan %>
+    <%= form.text_field :pernyataan, id: :sk_pernyataan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :approved_by_school %>
+    <%= form.check_box :approved_by_school, id: :sk_approved_by_school %>
+  </div>
+
+  <div class="field">
+    <%= form.label :approved_by_admin %>
+    <%= form.check_box :approved_by_admin, id: :sk_approved_by_admin %>
+  </div>
+
+  <div class="field">
+    <%= form.label :note %>
+    <%= form.text_field :note, id: :sk_note %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sk_for_teacher %>
+    <%= form.text_field :sk_for_teacher, id: :sk_sk_for_teacher %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

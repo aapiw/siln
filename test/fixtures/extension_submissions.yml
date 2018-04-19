@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school: one
+  year: MyString
+  approved_by_admin: false
+
+two:
+  school: two
+  year: MyString
+  approved_by_admin: false

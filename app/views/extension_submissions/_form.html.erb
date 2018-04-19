@@ -1,0 +1,32 @@
+<%= form_with(model: extension_submission, local: true) do |form| %>
+  <% if extension_submission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(extension_submission.errors.count, "error") %> prohibited this extension_submission from being saved:</h2>
+
+      <ul>
+      <% extension_submission.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :school_id %>
+    <%= form.text_field :school_id, id: :extension_submission_school_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :year %>
+    <%= form.text_field :year, id: :extension_submission_year %>
+  </div>
+
+  <div class="field">
+    <%= form.label :approved_by_admin %>
+    <%= form.check_box :approved_by_admin, id: :extension_submission_approved_by_admin %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

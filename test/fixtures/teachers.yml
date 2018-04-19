@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school: one
+  sk_submission: one
+  name: MyString
+  pns: false
+  age: MyString
+  period_of_teaching: MyString
+  number_of_extension: 1
+  expire: 2018-04-15
+
+two:
+  school: two
+  sk_submission: two
+  name: MyString
+  pns: false
+  age: MyString
+  period_of_teaching: MyString
+  number_of_extension: 1
+  expire: 2018-04-15

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @sk_submission.year %>
+</p>
+
+<p>
+  <strong>School:</strong>
+  <%= @sk_submission.school %>
+</p>
+
+<%= link_to 'Edit', edit_sk_submission_path(@sk_submission) %> |
+<%= link_to 'Back', sk_submissions_path %>

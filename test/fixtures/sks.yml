@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  teacher: one
+  year: MyString
+  permohonan_perwakilan: 
+  ijazah: 
+  sertifikat_pendidik: 
+  nuptk: 
+  sk_perwakilan: 
+  ktp_or_paspor: 
+  kk: 
+  cv: 
+  sk_inpassing: 
+  biodata_ln: 
+  form_biaya: 
+  pernyataan: 
+  approved_by_school: false
+  approved_by_admin: false
+  note: MyString
+  sk_for_teacher: 
+
+two:
+  teacher: two
+  year: MyString
+  permohonan_perwakilan: 
+  ijazah: 
+  sertifikat_pendidik: 
+  nuptk: 
+  sk_perwakilan: 
+  ktp_or_paspor: 
+  kk: 
+  cv: 
+  sk_inpassing: 
+  biodata_ln: 
+  form_biaya: 
+  pernyataan: 
+  approved_by_school: false
+  approved_by_admin: false
+  note: MyString
+  sk_for_teacher: 

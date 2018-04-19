@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Extension Submissions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>School</th>
+      <th>Year</th>
+      <th>Approved by admin</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @extension_submissions.each do |extension_submission| %>
+      <tr>
+        <td><%= extension_submission.school %></td>
+        <td><%= extension_submission.year %></td>
+        <td><%= extension_submission.approved_by_admin %></td>
+        <td><%= link_to 'Show', extension_submission %></td>
+        <td><%= link_to 'Edit', edit_extension_submission_path(extension_submission) %></td>
+        <td><%= link_to 'Destroy', extension_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Extension Submission', new_extension_submission_path %>

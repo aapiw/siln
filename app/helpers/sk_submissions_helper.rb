@@ -1,0 +1,2 @@
+module SkSubmissionsHelper
+end

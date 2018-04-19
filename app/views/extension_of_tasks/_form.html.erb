@@ -1,0 +1,62 @@
+<%= form_with(model: extension_of_task, local: true) do |form| %>
+  <% if extension_of_task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(extension_of_task.errors.count, "error") %> prohibited this extension_of_task from being saved:</h2>
+
+      <ul>
+      <% extension_of_task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :teacher_id %>
+    <%= form.text_field :teacher_id, id: :extension_of_task_teacher_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :year %>
+    <%= form.text_field :year, id: :extension_of_task_year %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rekomendasi_perwakilan %>
+    <%= form.text_field :rekomendasi_perwakilan, id: :extension_of_task_rekomendasi_perwakilan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :persetujuan_pemda_or_sekolah %>
+    <%= form.text_field :persetujuan_pemda_or_sekolah, id: :extension_of_task_persetujuan_pemda_or_sekolah %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sk_mendikbud %>
+    <%= form.text_field :sk_mendikbud, id: :extension_of_task_sk_mendikbud %>
+  </div>
+
+  <div class="field">
+    <%= form.label :surat_persetujuan_setneg %>
+    <%= form.text_field :surat_persetujuan_setneg, id: :extension_of_task_surat_persetujuan_setneg %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assessment %>
+    <%= form.text_field :assessment, id: :extension_of_task_assessment %>
+  </div>
+
+  <div class="field">
+    <%= form.label :note %>
+    <%= form.text_field :note, id: :extension_of_task_note %>
+  </div>
+
+  <div class="field">
+    <%= form.label :approved_by_school %>
+    <%= form.check_box :approved_by_school, id: :extension_of_task_approved_by_school %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

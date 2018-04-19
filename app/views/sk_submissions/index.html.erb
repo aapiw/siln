@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sk Submissions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>School</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sk_submissions.each do |sk_submission| %>
+      <tr>
+        <td><%= sk_submission.year %></td>
+        <td><%= sk_submission.school %></td>
+        <td><%= link_to 'Show', sk_submission %></td>
+        <td><%= link_to 'Edit', edit_sk_submission_path(sk_submission) %></td>
+        <td><%= link_to 'Destroy', sk_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sk Submission', new_sk_submission_path %>

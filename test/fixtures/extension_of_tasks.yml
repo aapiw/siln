@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  teacher: one
+  year: MyString
+  rekomendasi_perwakilan: 
+  persetujuan_pemda_or_sekolah: 
+  sk_mendikbud: 
+  surat_persetujuan_setneg: 
+  assessment: MyString
+  note: MyString
+  approved_by_school: false
+
+two:
+  teacher: two
+  year: MyString
+  rekomendasi_perwakilan: 
+  persetujuan_pemda_or_sekolah: 
+  sk_mendikbud: 
+  surat_persetujuan_setneg: 
+  assessment: MyString
+  note: MyString
+  approved_by_school: false
