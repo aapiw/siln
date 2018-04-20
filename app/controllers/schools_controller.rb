@@ -1,4 +1,4 @@
-class SchoolController < ApplicationController
+class SchoolsController < ApplicationController
 	  before_action :set_school, only: [:show, :edit, :update, :destroy]
 
   # GET /schools
@@ -10,6 +10,7 @@ class SchoolController < ApplicationController
   # GET /schools/1
   # GET /schools/1.json
   def show
+    @teachers = @school.teachers
   end
 
   # GET /schools/new
@@ -28,11 +29,10 @@ class SchoolController < ApplicationController
 
     respond_to do |format|
       if @school.save
-        format.html { redirect_to @school, notice: 'school was successfully created.' }
-        format.json { render :show, status: :created, location: @school }
+        format.html { redirect_to schools_url, notice: 'Sekolah berhasil dibuat.' }
       else
         format.html { render :new }
-        format.json { render json: @school.errors, status: :unprocessable_entity }
+        flash["alert"] = @school.errors.full_messages
       end
     end
   end
@@ -42,11 +42,10 @@ class SchoolController < ApplicationController
   def update
     respond_to do |format|
       if @school.update(school_params)
-        format.html { redirect_to @school, notice: 'school was successfully updated.' }
-        format.json { render :show, status: :ok, location: @school }
+        format.html { redirect_to schools_url, notice: 'Sekolah berhasil diubah.' }
       else
         format.html { render :edit }
-        format.json { render json: @school.errors, status: :unprocessable_entity }
+        flash["alert"] = @school.errors.full_messages
       end
     end
   end
@@ -56,8 +55,7 @@ class SchoolController < ApplicationController
   def destroy
     @school.destroy
     respond_to do |format|
-      format.html { redirect_to schools_url, notice: 'school was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to schools_url, notice: 'Sekolah berhasil dihapus.' }
     end
   end
 
@@ -69,6 +67,6 @@ class SchoolController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def school_params
-      params.require(:school).permit(:username, :email, :password, :display_password, :name, :country_id, :responsible_school, :phone, :admin)
+      params.require(:school).permit(:username, :email, :password, :name, :country_id, :responsible_school, :phone)
     end
 end

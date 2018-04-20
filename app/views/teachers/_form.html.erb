@@ -1,57 +1,64 @@
-<%= form_with(model: teacher, local: true) do |form| %>
-  <% if teacher.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(teacher.errors.count, "error") %> prohibited this teacher from being saved:</h2>
+<div class="content mt-3">
+  <div class="animated fadeIn">
 
-      <ul>
-      <% teacher.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :school_id %>
-    <%= form.text_field :school_id, id: :teacher_school_id %>
-  </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+              <div class="card-header">
+                  <strong class="card-title">TAMBAH GURU</strong>
+              </div>
+              <div class="card-body card-block">
 
-  <div class="field">
-    <%= form.label :sk_submission_id %>
-    <%= form.text_field :sk_submission_id, id: :teacher_sk_submission_id %>
-  </div>
+                <%= form_with(model: teacher, local: true) do |form| %>
+                  <div class="form-group">
+                    <%= form.label :name, "Nama" %>
+                    <%= form.text_field :name, id: :teacher_name,  required:true, placeholder: "Nama", class:"form-control"  %>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col col-md-3"><label class=" form-control-label">PNS</label></div>
+                    <div class="col col-md-9">
+                      <div class="form-check-inline form-check">
+                        <label for="teacher_pns" class="form-check-label ">
+                          <%= form.check_box :pns, id: :teacher_pns, class:"form-check-input" %>Ya
+                        </label>
+                      </div>
+                    </div>
+                  </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :teacher_name %>
-  </div>
+                  <div class="form-group">
+                    <%= form.label :age, "Usia" %>
+                    <%= form.number_field :age, id: :teacher_age, min:0, required:true, placeholder: "Usia", class:"form-control" %>
+                  </div>
 
-  <div class="field">
-    <%= form.label :pns %>
-    <%= form.check_box :pns, id: :teacher_pns %>
-  </div>
+                  <div class="form-group">
+                    <%= form.label :period_of_teaching, "Lama Mengajar (Tahun)" %>
+                    <%= form.number_field :period_of_teaching, id: :teacher_period_of_teaching, required:true, placeholder: "Lama Mengajar", class:"form-control" %>
+                  </div>
 
-  <div class="field">
-    <%= form.label :age %>
-    <%= form.text_field :age, id: :teacher_age %>
-  </div>
+                  <div class="form-group">
+                    <%= form.label :number_of_extension, "Jumlah Perpanjangan" %>
+                    <%= form.number_field :number_of_extension,min:0, id: :teacher_number_of_extension,required:true, placeholder: "Jumlah Perpanjangan", class:"form-control" %>
+                  </div>
 
-  <div class="field">
-    <%= form.label :period_of_teaching %>
-    <%= form.text_field :period_of_teaching, id: :teacher_period_of_teaching %>
-  </div>
+                  <div class="form-group">
+                    <%= form.label :expire, "Masa Berlaku" %>
+                    <%= form.date_select :expire, id: :teacher_expire, required:true, placeholder: "Masa Berlaku", class:"form-control" %>
+                  </div>
 
-  <div class="field">
-    <%= form.label :number_of_extension %>
-    <%= form.number_field :number_of_extension, id: :teacher_number_of_extension %>
-  </div>
+                  <div class="actions">
+                    <%= form.submit "Kirim", class:"btn btn-primary" %>
+                  </div>
+                <% end %>          
 
-  <div class="field">
-    <%= form.label :expire %>
-    <%= form.date_select :expire, id: :teacher_expire %>
-  </div>
+              </div>
+          </div> <!-- .card -->
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+        </div><!--/.col-->
+
+
+      </div>
+
+
+  </div><!-- .animated -->
+</div><!-- .content -->

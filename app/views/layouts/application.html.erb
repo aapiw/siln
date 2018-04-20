@@ -10,14 +10,14 @@
   </head>
   
   <body class="<%= school_signed_in? ? '' : 'bg-dark' %> "  >
-  <h1><%#=root_path%></h1>
   <% if school_signed_in? %>
     <%= render "layouts/sidebar" %>
     <div id="right-panel" class="right-panel">
       <%= render "layouts/header" %>
       <%= render "layouts/flash_messages" %>
+      
+        <%= yield %>
 
-      <%= yield %>
     </div><!-- /#right-panel -->
   <% else %>
       <%= yield %>

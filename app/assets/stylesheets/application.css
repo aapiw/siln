@@ -3,7 +3,6 @@
 = require bootstrap.min
 = require fonts/font-awesome.min
 = require themify-icons
-= require flag-icon.min
 = require cs-skin-elastic
 = require lib/datatable/dataTables.bootstrap.min
 = require bootstrap-select
