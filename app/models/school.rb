@@ -9,5 +9,8 @@ class School < ApplicationRecord
  has_many  :extension_submission
  belongs_to :country
 
+ def type
+ 	admin ? "Admin" : "Sekolah"
+ end
 
 end

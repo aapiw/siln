@@ -9,22 +9,19 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
   </head>
   
-  <body> 
-  <%#= current_school.name if school_signed_in? %>
-  
-  <%= render "layouts/sidebar" %>
-  <div id="right-panel" class="right-panel">
-    <%= render "layouts/header" %>
-    <%= yield %>
-  </div><!-- /#right-panel -->
+  <body class="<%= school_signed_in? ? '' : 'bg-dark' %> "  >
+  <h1><%#=root_path%></h1>
+  <% if school_signed_in? %>
+    <%= render "layouts/sidebar" %>
+    <div id="right-panel" class="right-panel">
+      <%= render "layouts/header" %>
+      <%= render "layouts/flash_messages" %>
 
-  
-    <% if notice %>
-  <p class="alert alert-success"><%= notice %></p>
-<% end %>
-<% if alert %>
-  <p class="alert alert-danger"><%= alert %></p>
-<% end %>
+      <%= yield %>
+    </div><!-- /#right-panel -->
+  <% else %>
+      <%= yield %>
+  <% end %>
 
 
   </body>
