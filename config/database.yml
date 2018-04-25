@@ -54,5 +54,5 @@ production:
   encoding: utf8
   database: siln_production
   pool: 5
-  username: <%= ENV['SILN_DATABASE_USERNAME'] %>
-  password: <%= ENV['SILN_DATABASE_PASSWORD'] %>
+  username: <%= ENV['DATABASE_URL'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
