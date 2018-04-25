@@ -42,7 +42,8 @@ class SchoolsController < ApplicationController
   def update
     respond_to do |format|
       if @school.update(school_params)
-        format.html { redirect_to schools_url, notice: 'Sekolah berhasil diubah.' }
+        sign_in(@school, :bypass => true)
+        format.html { redirect_to schools_path, notice: 'Sekolah berhasil diubah.' }
       else
         format.html { render :edit }
         flash["alert"] = @school.errors.full_messages

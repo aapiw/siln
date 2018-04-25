@@ -1,5 +1,6 @@
 class ExtensionOfTasksController < ApplicationController
   before_action :set_extension_of_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_teacher, only: [:new, :edit]
 
   # GET /extension_of_tasks
   # GET /extension_of_tasks.json
@@ -28,11 +29,12 @@ class ExtensionOfTasksController < ApplicationController
 
     respond_to do |format|
       if @extension_of_task.save
-        format.html { redirect_to @extension_of_task, notice: 'Extension of task was successfully created.' }
-        format.json { render :show, status: :created, location: @extension_of_task }
+        format.html { redirect_to extension_of_tasks_path, notice: 'Perpanjangan tugas berhasil dibuat.' }
+        # format.json { render :show, status: :created, location: @extension_of_task }
       else
         format.html { render :new }
-        format.json { render json: @extension_of_task.errors, status: :unprocessable_entity }
+        flash["alert"] = @extension_of_task.errors.full_messages
+        # format.json { render json: @extension_of_task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +44,12 @@ class ExtensionOfTasksController < ApplicationController
   def update
     respond_to do |format|
       if @extension_of_task.update(extension_of_task_params)
-        format.html { redirect_to @extension_of_task, notice: 'Extension of task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @extension_of_task }
+        format.html { redirect_to @extension_of_task, notice: 'Perpanjangan tugas berhasil diubah.' }
+        # format.json { render :show, status: :ok, location: @extension_of_task }
       else
         format.html { render :edit }
-        format.json { render json: @extension_of_task.errors, status: :unprocessable_entity }
+        flash["alert"] = @extension_of_task.errors.full_messages
+        # format.json { render json: @extension_of_task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -56,8 +59,8 @@ class ExtensionOfTasksController < ApplicationController
   def destroy
     @extension_of_task.destroy
     respond_to do |format|
-      format.html { redirect_to extension_of_tasks_url, notice: 'Extension of task was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to extension_of_tasks_url, notice: 'Perpanjangan tugas berhasil dihapus.' }
+      # format.json { head :no_content }
     end
   end
 
@@ -65,6 +68,11 @@ class ExtensionOfTasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_extension_of_task
       @extension_of_task = ExtensionOfTask.find(params[:id])
+    end
+
+    def set_teacher
+      @teacher = Teacher.find(params[:teacher_id]) if params[:teacher_id]
+      @teacher = Teacher.find(params[:sk][:teacher_id]) if params[:sk] and params[:sk][:teacher_id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,15 +1,7 @@
-<%# if action_name ==  'index' and controller_name == 'landings'
-		klass  = 'container' 
-	else
-		klass = 'container-flash'
-	end 
-%>
-
-<%if flash.present? %>
-<!-- <div class=" "> -->
-		<% flash.each do |key, value| %>
+<% if flash.present? %>
+	<% flash.each do |key, value| %>
 		<% color = {alert:"danger", notice:"success" } %>
-		<div class="sufee-alert alert with-close alert-<%=color[key.to_sym] %> alert-dismissible fade show">
+		<div class="sufee-alert alert with-close alert-<%=color[key.to_sym] %> alert-dismissible fade show mt-2">
 		  <% if value.respond_to? :each %>
 			  <ul>
 				  <% value.each do |message| %>
@@ -21,7 +13,7 @@
 			 <% end %>
 	    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	      <span aria-hidden="true">×</span>
-	  </button>
-	</div>
-<% end %>
+	  	</button>
+		</div>
+	<% end %>
 <% end %>

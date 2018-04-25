@@ -2,6 +2,7 @@ class CreateSks < ActiveRecord::Migration[5.1]
   def change
     create_table :sks do |t|
       t.references :teacher, foreign_key: true
+      t.references :sk_submission, foreign_key: true
       t.string :year
       t.attachment :permohonan_perwakilan
       t.attachment :ijazah
@@ -15,10 +16,8 @@ class CreateSks < ActiveRecord::Migration[5.1]
       t.attachment :biodata_ln
       t.attachment :form_biaya
       t.attachment :pernyataan
-      t.boolean :approved_by_school, default:false
-      t.boolean :approved_by_admin, default:false
       t.string :note
-      t.attachment :sk_for_teacher
+      t.attachment :sk_untuk_guru
 
       t.timestamps
     end

@@ -14,26 +14,32 @@
             <ul class="nav navbar-nav">
             <% if current_school.admin %>
                 <li class="<%#= active_class(admin_root_path, admins_dashboard_index_path) %>">
-                    <a href="<%=signed_in_root_path%>"> <i class="menu-icon fa fa-dashboard"></i>Beranda </a>
+                    <a href="<%=signed_in_root_path%>"> <i class="menu-icon fa fa-home"></i>Beranda </a>
                 </li>
                  <li class="">
-                    <a href="#"> <i class="menu-icon fa fa-list-alt"></i>Daftar Permohonan </a>
+                    <a href="<%= sk_submissions_path %>"> <i class="menu-icon fa fa-list-alt"></i>Pengajuan SK</a>
+                </li>
+                <li class="">
+                    <a href="<%= extension_submissions_path %>"> <i class="menu-icon fa fa-list-alt"></i>Pengajuan Perpanjangan</a>
                 </li>
                 <li class="">
                     <a href="<%= new_school_path %>"> <i class="menu-icon fa fa-plus-square"></i>Tambah Sekolah </a>
                 </li>
             <% else %>
                 <li class="">
-                    <a href="<%=signed_in_root_path%>"> <i class="menu-icon fa fa-dashboard"></i>Beranda </a>
+                    <a href="<%=signed_in_root_path%>"> <i class="menu-icon fa fa-home"></i>Beranda </a>
                 </li>
                 <li class="active">
-                    <a href="<%= new_teacher_path %>"> <i class="menu-icon fa fa-plus-square"></i>Tambah Guru </a>
+                    <a href="<%= new_teacher_path %>"> <i class="menu-icon fa fa-plus-square"></i>Guru </a>
                 </li>
                  <li class="">
-                    <a href="#"> <i class="menu-icon fa fa-list-alt"></i>Daftar Permohonan </a>
+                    <a href="<%= sk_submissions_path %>"> <i class="menu-icon fa fa-list-alt"></i>Pengajuan SK</a>
                 </li>
                 <li class="">
-                    <a href="#"> <i class="menu-icon fa fa-gear"></i>Pengaturan </a>
+                    <a href="<%= extension_submissions_path %>"> <i class="menu-icon fa fa-list-alt"></i>Pengajuan Perpanjangan</a>
+                </li>
+                <li class="">
+                    <a href="<%= edit_school_path(current_school) %>"> <i class="menu-icon fa fa-gear"></i>Pengaturan </a>
                 </li>
             <% end %>
             </ul>

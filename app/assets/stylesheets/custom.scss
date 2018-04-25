@@ -27,3 +27,26 @@
 .required{
 	color: #dc3545;
 }
+.lock{
+	div, input, a:not([data-fancybox=gallery]){
+		pointer-events:none;
+		opacity: 0.8;
+	}
+}
+
+[data-fancybox=gallery]{
+	position: relative;
+	z-index: 5;
+	// cursor: zoom-in;
+	// cursor: 
+}
+.no-overflow{
+	overflow: hidden;
+}
+.fancybox-button.fancybox-button--share{
+  display: none !important;
+	
+}
+// a:visited {
+// 	color: #000;
+// }

@@ -62,19 +62,19 @@
 <%= render "layouts/filters" %>
 
 <div class="content mt-3">
-            <div class="animated fadeIn">
-                <div class="row">
+    <div class="animated fadeIn">
+        <div class="row">
 
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">DAFTAR Sekolah</strong>
-                        </div>
-                        <div class="card-body">
-                          <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                            <thead>
-                              <tr>
-                             <!-- No
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">DAFTAR Sekolah</strong>
+                </div>
+                <div class="card-body">
+                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                     <!-- No
 Nama Sekolah
 Negara
 Guru PNS {count}
@@ -84,45 +84,42 @@ Guru Non PNS Akan Habis Masa Tugas {count}
 Guru PNS Habis Masa Tugas {count}
 Guru Non PNS Habis Masa Tugas {count}
 Aksi
-	[button Tampilkan]
- -->
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Guru PNS</th>
-                                <th>Guru Non PNS</th>
-                                <th>Guru PNS Akan Habis Masa Tugas</th>
-                                <th>Guru Non PNS Akan Habis Masa Tugas</th>
-                                <th>Guru PNS Habis Masa Tugas</th>
-                                <th>Guru Non PNS Habis Masa Tugas</th>
-                                <th>Aksi</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            <% @schools.each_with_index do |school,index| %>
-                              <tr>
-                                <td><%=index+1 %></td>
-                                <td><%= school.name %></td>
-                                <td><%= school.count_pns %></td>
-                                <td><%= school.count_non_pns  %></td>
-                                <td><%= school.count_pns_will_expire %></td>
-                                <td><%= school.count_non_pns_will_expire %></td>
-                                <td><%= school.count_pns_expire %></td>
-                                <td><%= school.count_non_pns_expire %></td>
-                                
-                                <td>
-                                <%= link_to "Tampilkan", school_path(school), target:"_blank", class:"btn btn-primary" %>
-                                  <!-- <a href="" class="btn btn-primary mb-1" target="blank">Permohonan SK</a>
-                                  <a href="" class="btn btn-primary" target="blank">Perpanjangan SK</a> -->
-                                </td>
-                              </tr>
-                            <% end %>
-                            </tbody>
-                          </table>
-                        </div>
-                    </div>
+[button Tampilkan]
+-->
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Guru PNS</th>
+                        <th>Guru Non PNS</th>
+                        <th>Guru PNS Akan Habis Masa Tugas</th>
+                        <th>Guru Non PNS Akan Habis Masa Tugas</th>
+                        <th>Guru PNS Habis Masa Tugas</th>
+                        <th>Guru Non PNS Habis Masa Tugas</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <% @schools.each_with_index do |school,index| %>
+                      <tr>
+                        <td><%=index+1 %></td>
+                        <td><%= school.name %></td>
+                        <td><%= school.count_pns %></td>
+                        <td><%= school.count_non_pns  %></td>
+                        <td><%= school.count_pns_will_expire %></td>
+                        <td><%= school.count_non_pns_will_expire %></td>
+                        <td><%= school.count_pns_expire %></td>
+                        <td><%= school.count_non_pns_expire %></td>
+                        <td>
+                        <%= link_to "Tampilkan", school_path(school), target:"_blank", class:"btn btn-primary" %>
+                        </td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
                 </div>
+            </div>
+        </div>
 
 
-                </div>
-            </div><!-- .animated -->
-        </div><!-- .content -->
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->

@@ -16,13 +16,14 @@
 //= require popper.min
 //= require plugins
 //= require main
+//= require jquery.fancybox.min
 
 //= require lib/data-table/datatables.min
 //= require lib/data-table/dataTables.bootstrap.min
 //= require lib/data-table/dataTables.buttons.min
 //= require lib/data-table/buttons.bootstrap.min
 //= require lib/data-table/jszip.min
-//= require lib/data-table/pdfmake.min
+// require lib/data-table/pdfmake.min
 //= require lib/data-table/vfs_fonts
 //= require lib/data-table/buttons.html5.min
 //= require lib/data-table/buttons.print.min
@@ -30,6 +31,7 @@
 //= require lib/data-table/datatables-init
 
 
+//= require lib/chosen/chosen.jquery.min
 //= require custom
 
 // require_tree .

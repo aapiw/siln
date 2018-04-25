@@ -1,5 +1,6 @@
 class SkSubmissionsController < ApplicationController
-  before_action :set_sk_submission, only: [:show, :edit, :update, :destroy]
+  before_action :set_sk_submission, only: [:show, :edit, :update, :destroy, :teachers_based_on_year]
+  before_action :set_teachers_based_on_year, only:[:new, :edit]
 
   # GET /sk_submissions
   # GET /sk_submissions.json
@@ -24,15 +25,17 @@ class SkSubmissionsController < ApplicationController
   # POST /sk_submissions
   # POST /sk_submissions.json
   def create
-    @sk_submission = SkSubmission.new(sk_submission_params)
+    sk_submission_params2 = sk_submission_params
+    sk_submission_params2["sk_ids"].reject!(&:blank?)
+
+    @sk_submission = SkSubmission.new(sk_submission_params2)
 
     respond_to do |format|
       if @sk_submission.save
-        format.html { redirect_to @sk_submission, notice: 'Sk submission was successfully created.' }
-        format.json { render :show, status: :created, location: @sk_submission }
+        format.html { redirect_to sk_submissions_url, notice: 'Pengajuan SK berhasil dibuat.' }
       else
         format.html { render :new }
-        format.json { render json: @sk_submission.errors, status: :unprocessable_entity }
+        flash["alert"] = @sk_submission.errors.full_messages
       end
     end
   end
@@ -40,13 +43,14 @@ class SkSubmissionsController < ApplicationController
   # PATCH/PUT /sk_submissions/1
   # PATCH/PUT /sk_submissions/1.json
   def update
+    sk_submission_params2 = sk_submission_params
+    sk_submission_params2["sk_ids"].reject!(&:blank?)
     respond_to do |format|
-      if @sk_submission.update(sk_submission_params)
-        format.html { redirect_to @sk_submission, notice: 'Sk submission was successfully updated.' }
-        format.json { render :show, status: :ok, location: @sk_submission }
+      if @sk_submission.update(sk_submission_params2)
+        format.html { redirect_to sk_submissions_url, notice: 'Pengajuan SK berhasil diperbarui.' }
       else
         format.html { render :edit }
-        format.json { render json: @sk_submission.errors, status: :unprocessable_entity }
+        flash["alert"] = @sk_submission.errors.full_messages
       end
     end
   end
@@ -56,12 +60,23 @@ class SkSubmissionsController < ApplicationController
   def destroy
     @sk_submission.destroy
     respond_to do |format|
-      format.html { redirect_to sk_submissions_url, notice: 'Sk submission was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to sk_submissions_url, notice: 'Pengajuan SK berhasil dihapus.' }
     end
+  end
+  
+  def teachers_based_on_year
+    @teachers_based_on_year = Sk.show_teachers_based_year(current_school.teachers.pluck(:id), params[:year])
+    render json: @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }
+    # respond_to do |format|
+    #   format.json { render json: @teachers_based_on_year, status: :ok }
+    # end
   end
 
   private
+
+    def set_teachers_based_on_year
+      @teachers_based_on_year = Sk.show_teachers_based_year(current_school.teachers.pluck(:id), @sk_submission.year || Time.now.year)
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_sk_submission
       @sk_submission = SkSubmission.find(params[:id])
@@ -69,6 +84,6 @@ class SkSubmissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sk_submission_params
-      params.require(:sk_submission).permit(:year, :school_id)
+      params.require(:sk_submission).permit(:year, :school_id, :admin, sk_ids:[])
     end
 end

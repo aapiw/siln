@@ -1,7 +1,26 @@
+# == Schema Information
+#
+# Table name: schools
+#
+#  id                  :integer          not null, primary key
+#  username            :string           default(""), not null
+#  email               :string
+#  encrypted_password  :string           default(""), not null
+#  display_password    :string
+#  name                :string
+#  remember_created_at :datetime
+#  country_id          :integer
+#  responsible_school  :string
+#  phone               :string
+#  admin               :boolean          default(FALSE)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#
+
 class School < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-	devise :database_authenticatable, :rememberable #:registerable,
+	devise :database_authenticatable, :rememberable#, :validatable
          #:recoverable, :trackable, :validatable
 	before_save :show_password
 
@@ -14,7 +33,7 @@ class School < ApplicationRecord
 	validates_presence_of :username, :password, :name, :country_id
 	validates :username, uniqueness: true, format: { with: /\A[a-zA-Z0-9]+\Z/ }
 	validates :password, length: { minimum: 6 }
-	validates :email, uniqueness: true
+	# validates :email, uniqueness: true
 
 
 	def count_pns

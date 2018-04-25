@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20180415133314) do
 
   create_table "extension_of_tasks", force: :cascade do |t|
     t.bigint "teacher_id"
+    t.bigint "extension_submission_id"
     t.string "year"
     t.string "rekomendasi_perwakilan_file_name"
     t.string "rekomendasi_perwakilan_content_type"
@@ -44,16 +45,20 @@ ActiveRecord::Schema.define(version: 20180415133314) do
     t.datetime "surat_persetujuan_setneg_updated_at"
     t.string "assessment"
     t.string "note"
-    t.boolean "approved_by_school", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["extension_submission_id"], name: "index_extension_of_tasks_on_extension_submission_id"
     t.index ["teacher_id"], name: "index_extension_of_tasks_on_teacher_id"
   end
 
   create_table "extension_submissions", force: :cascade do |t|
     t.bigint "school_id"
     t.string "year"
-    t.boolean "approved_by_admin"
+    t.string "perpanjangan_tugas_file_name"
+    t.string "perpanjangan_tugas_content_type"
+    t.integer "perpanjangan_tugas_file_size"
+    t.datetime "perpanjangan_tugas_updated_at"
+    t.boolean "approved_by_admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_id"], name: "index_extension_submissions_on_school_id"
@@ -78,6 +83,7 @@ ActiveRecord::Schema.define(version: 20180415133314) do
   create_table "sk_submissions", force: :cascade do |t|
     t.string "year"
     t.bigint "school_id"
+    t.boolean "approved_by_admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_id"], name: "index_sk_submissions_on_school_id"
@@ -85,6 +91,7 @@ ActiveRecord::Schema.define(version: 20180415133314) do
 
   create_table "sks", force: :cascade do |t|
     t.bigint "teacher_id"
+    t.bigint "sk_submission_id"
     t.string "year"
     t.string "permohonan_perwakilan_file_name"
     t.string "permohonan_perwakilan_content_type"
@@ -134,21 +141,19 @@ ActiveRecord::Schema.define(version: 20180415133314) do
     t.string "pernyataan_content_type"
     t.integer "pernyataan_file_size"
     t.datetime "pernyataan_updated_at"
-    t.boolean "approved_by_school", default: false
-    t.boolean "approved_by_admin", default: false
     t.string "note"
-    t.string "sk_for_teacher_file_name"
-    t.string "sk_for_teacher_content_type"
-    t.integer "sk_for_teacher_file_size"
-    t.datetime "sk_for_teacher_updated_at"
+    t.string "sk_untuk_guru_file_name"
+    t.string "sk_untuk_guru_content_type"
+    t.integer "sk_untuk_guru_file_size"
+    t.datetime "sk_untuk_guru_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["sk_submission_id"], name: "index_sks_on_sk_submission_id"
     t.index ["teacher_id"], name: "index_sks_on_teacher_id"
   end
 
   create_table "teachers", force: :cascade do |t|
     t.bigint "school_id"
-    t.bigint "sk_submission_id"
     t.string "name"
     t.boolean "pns"
     t.string "age"
@@ -158,13 +163,13 @@ ActiveRecord::Schema.define(version: 20180415133314) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_id"], name: "index_teachers_on_school_id"
-    t.index ["sk_submission_id"], name: "index_teachers_on_sk_submission_id"
   end
 
+  add_foreign_key "extension_of_tasks", "extension_submissions"
   add_foreign_key "extension_of_tasks", "teachers"
   add_foreign_key "extension_submissions", "schools"
   add_foreign_key "sk_submissions", "schools"
+  add_foreign_key "sks", "sk_submissions"
   add_foreign_key "sks", "teachers"
   add_foreign_key "teachers", "schools"
-  add_foreign_key "teachers", "sk_submissions"
 end

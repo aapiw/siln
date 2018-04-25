@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   private
   
     def clear_flash
-      flash.clear  
+      flash.clear unless controller_name == "sessions"
     end
   # def after_sign_out_path_for(resource_or_scope)
   #   if resource_or_scope == :user

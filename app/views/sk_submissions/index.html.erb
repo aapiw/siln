@@ -1,6 +1,46 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Sk Submissions</h1>
+<div class="content mt-3">
+    <div class="animated fadeIn">
+        <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">DAFTAR PENGAJUAN SK</strong>
+                </div>
+                <div class="card-body">
+                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Tahun</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <% @sk_submissions.each_with_index do |sk_submission, index| %>
+                      <tr>
+                        <td><%=index+1 %></td>
+                        <td><%= sk_submission.year %></td>
+                        <td>
+                        <%= link_to "Lihat", edit_school_sk_submission_path(current_school.id, sk_submission), target:"_blank", class:"btn btn-primary" %>
+                        </td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+              <%= link_to 'Pengajuan SK Baru', new_school_sk_submission_path(current_school.id), class:"btn btn-primary" %>
+        </div>
+
+
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+
+
+<!-- <h1>Sk Submissions</h1>
 
 <table>
   <thead>
@@ -12,18 +52,17 @@
   </thead>
 
   <tbody>
-    <% @sk_submissions.each do |sk_submission| %>
+    <%# @sk_submissions.each do |sk_submission| %>
       <tr>
-        <td><%= sk_submission.year %></td>
-        <td><%= sk_submission.school %></td>
-        <td><%= link_to 'Show', sk_submission %></td>
-        <td><%= link_to 'Edit', edit_sk_submission_path(sk_submission) %></td>
-        <td><%= link_to 'Destroy', sk_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%#= sk_submission.year %></td>
+        <td><%#= sk_submission.school %></td>
+        <td><%#= link_to 'Show', sk_submission %></td>
+        <td><%#= link_to 'Edit', edit_sk_submission_path(sk_submission) %></td>
+        <td><%#= link_to 'Destroy', sk_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+    <%# end %>
   </tbody>
 </table>
 
-<br>
+<br> -->
 
-<%= link_to 'New Sk Submission', new_sk_submission_path %>

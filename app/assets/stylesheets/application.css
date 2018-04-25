@@ -7,5 +7,7 @@
 = require lib/datatable/dataTables.bootstrap.min
 = require bootstrap-select
 = require style
+= require jquery.fancybox.min.css
+= require lib/chosen/chosen.min
 = require custom
 */

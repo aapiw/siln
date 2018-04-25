@@ -1,0 +1,8 @@
+$("#select_teachers_based_on_year").html('<%= select_tag "sk_submission[sk_ids][]", options_for_select(@teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }, @sk_submission.sks.pluck(:id) ), class:"select_teachers_based_on_year form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true %>')
+
+$(".standardSelect").chosen({
+  disable_search_threshold: 10,
+  no_results_text: "Maaf, tidak ditemukan!",
+  width: "100%"
+});
+$("#select_teachers_based_on_year .select_teachers_based_on_year").trigger("chosen:updated");

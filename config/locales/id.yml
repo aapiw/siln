@@ -151,9 +151,9 @@ id:
     select:
       prompt: Silakan pilih
     submit:
-      create: Buat %{model}
-      submit: Simpan %{model}
-      update: Perbarui %{model}
+      create: Kirim #%{model}
+      submit: Simpan #%{model}
+      update: Perbarui #%{model}
   number:
     currency:
       format:

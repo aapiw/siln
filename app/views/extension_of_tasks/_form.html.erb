@@ -1,62 +1,78 @@
-<%= form_with(model: extension_of_task, local: true) do |form| %>
-  <% if extension_of_task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(extension_of_task.errors.count, "error") %> prohibited this extension_of_task from being saved:</h2>
+<!-- Pilih tahun {today}
+Upload Rekomendasi Perwakilan
+Upload Persetujuan Pemda/Sekolah
+Upload SK Mendikbud
+Upload Surat Persetujuan Setneg
+Input Penilaian [text box] {not require}
+Submit [button]
+View catatan
+View Terverifikasi
+ -->
+<div class="content mt-3">
+  <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+              <div class="card-header">
+                  <strong class="card-title">Perpanjangan Tugas Untuk Guru <%= @teacher.name %></strong>
+              </div>
+              <div class="card-body card-block">
+                
+                <%= form_with(model: extension_of_task, local: true) do |form| %>
+                  <div class="form-group">
+                    <%= form.hidden_field :teacher_id, value:@teacher.id, id: :sk_teacher_id %>
+                  </div>
 
-      <ul>
-      <% extension_of_task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+                  <div class="form-group">
+                    <%= form.label :year, "Tahun" %>
+                    <%= form.select :year, (Time.zone.now.year)..(Time.zone.now.year + 20), {:selected => Time.now.year}, required:true, class:"form-control" %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= form.label :rekomendasi_perwakilan, "Upload Rekomendasi Perwakilan" %>
+                    <%= form.file_field :rekomendasi_perwakilan, id: :extension_of_task_rekomendasi_perwakilan, required:true, placeholder:"Upload Rekomendasi Perwakilan", class:"form-control" %>
+                    <%= see_donwload(extension_of_task.rekomendasi_perwakilan, "Rekomendasi Perwakilan")  if extension_of_task.persisted? %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= form.label :persetujuan_pemda_or_sekolah, "Upload Surat Persetujuan Setneg" %>
+                    <%= form.file_field :persetujuan_pemda_or_sekolah, id: :extension_of_task_persetujuan_pemda_or_sekolah, required:true, placeholder:"Upload Surat Persetujuan Setneg", class:"form-control" %>
+                    <%= see_donwload(extension_of_task.persetujuan_pemda_or_sekolah, "Surat Persetujuan Setneg")  if extension_of_task.persisted? %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= form.label :sk_mendikbud, "Upload SK Mendikbud" %>
+                    <%= form.file_field :sk_mendikbud, id: :extension_of_task_sk_mendikbud, required:true, placeholder:"Upload SK Mendikbud", class:"form-control" %>
+                    <%= see_donwload(extension_of_task.sk_mendikbud, "Surat SK Mendikbud")  if extension_of_task.persisted? %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= form.label :surat_persetujuan_setneg, "Upload Surat Persetujuan Setneg" %>
+                    <%= form.file_field :surat_persetujuan_setneg, id: :extension_of_task_surat_persetujuan_setneg, required:true, placeholder:"", class:"form-control" %>
+                    <%= see_donwload(extension_of_task.surat_persetujuan_setneg, "Surat Persetujuan Setneg")  if extension_of_task.persisted? %>
+                  </div>
+
+                  <!-- <div class="form-group">
+                    <%#= form.label :assessment, "Penilaian" %>
+                    <%#= form.text_area :assessment, id: :extension_of_task_assessment, placeholder:"Penilaian", class:"form-control" %>
+                  </div> -->
+
+                  <!-- <div class="form-group"> -->
+                    <%#= form.label :note, "Catatatan" %>
+                    <%#= form.text_area :note, id: :extension_of_task_note, required:true, placeholder:"Catatan", class:"form-control" %>
+                  <!-- </div> -->
+
+                  <!-- <div class="form-group"> -->
+                    <%#= form.label :approved_by_school %>
+                    <%#= form.check_box :approved_by_school, id: :extension_of_task_approved_by_school, required:true, placeholder:"", class:"form-control" %>
+                  <!-- </div> -->
+
+                    <%= form.submit class:"btn btn-primary" %>
+                <% end %>
+
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :teacher_id %>
-    <%= form.text_field :teacher_id, id: :extension_of_task_teacher_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :year %>
-    <%= form.text_field :year, id: :extension_of_task_year %>
-  </div>
-
-  <div class="field">
-    <%= form.label :rekomendasi_perwakilan %>
-    <%= form.text_field :rekomendasi_perwakilan, id: :extension_of_task_rekomendasi_perwakilan %>
-  </div>
-
-  <div class="field">
-    <%= form.label :persetujuan_pemda_or_sekolah %>
-    <%= form.text_field :persetujuan_pemda_or_sekolah, id: :extension_of_task_persetujuan_pemda_or_sekolah %>
-  </div>
-
-  <div class="field">
-    <%= form.label :sk_mendikbud %>
-    <%= form.text_field :sk_mendikbud, id: :extension_of_task_sk_mendikbud %>
-  </div>
-
-  <div class="field">
-    <%= form.label :surat_persetujuan_setneg %>
-    <%= form.text_field :surat_persetujuan_setneg, id: :extension_of_task_surat_persetujuan_setneg %>
-  </div>
-
-  <div class="field">
-    <%= form.label :assessment %>
-    <%= form.text_field :assessment, id: :extension_of_task_assessment %>
-  </div>
-
-  <div class="field">
-    <%= form.label :note %>
-    <%= form.text_field :note, id: :extension_of_task_note %>
-  </div>
-
-  <div class="field">
-    <%= form.label :approved_by_school %>
-    <%= form.check_box :approved_by_school, id: :extension_of_task_approved_by_school %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

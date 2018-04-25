@@ -1,27 +1,35 @@
-<%= form_with(model: sk_submission, local: true) do |form| %>
-  <% if sk_submission.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(sk_submission.errors.count, "error") %> prohibited this sk_submission from being saved:</h2>
+<div class="content mt-3">
+  <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+              <div class="card-header">
+                  <strong class="card-title">TAMBAH PENGAJUAN SK</strong>
+              </div>
+              <div class="card-body card-block">
+                <%= form_with(model: sk_submission, local: true) do |form| %>
+                  <div class="form-group" >
+                    <%= form.label :year, "Tahun" %>
+                      <%= form.select :year, (Time.zone.now.year)..(Time.zone.now.year + 20), {include_hidden: false, :selected => sk_submission.year || Time.now.year}, id: :sk_submission_year, class:"form-control", data:{sk_submission_id:sk_submission.id} %>
+                  </div>
+                  <div>
+                    <%= form.select(:sk_ids, @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }, {selected: sk_submission.sks.pluck(:id) }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.hidden_field :school_id, value:current_school.id, id: :sk_submission_school_id, required:true, placeholder:"", class:"from-control" %>
+                  </div>
+                  <%= form.submit class:"btn btn-primary" %>
+                <% end %>
 
-      <ul>
-      <% sk_submission.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+              </div>
+          </div> <!-- .card -->
 
-  <div class="field">
-    <%= form.label :year %>
-    <%= form.text_field :year, id: :sk_submission_year %>
-  </div>
+        </div><!--/.col-->
 
-  <div class="field">
-    <%= form.label :school_id %>
-    <%= form.text_field :school_id, id: :sk_submission_school_id %>
-  </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+      </div>
+
+
+  </div><!-- .animated -->
+</div><!-- .content -->
+
