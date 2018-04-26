@@ -1,10 +1,21 @@
 class ApplicationController < ActionController::Base
+  # load_and_authorize_resource
+
   protect_from_forgery with: :exception
   before_action :authenticate_school!
   before_action :clear_flash, only: [:new]
   # before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def current_ability
+    @current_ability ||= Ability.new(current_school)
+  end
 
+  # rescue_from CanCan::AccessDenied do |exception|
+  #   flash[:alert]  = "Anda tidak mempunyai otoritas untuk mengakses halaman tersebut."
+  #   respond_to do |format|
+  #     format.html { redirect_to root_path }
+  #   end
+  # end
 
   private
   

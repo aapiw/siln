@@ -2,9 +2,9 @@
 #
 # Table name: extension_of_tasks
 #
-#  id                                        :integer          not null, primary key
-#  teacher_id                                :integer
-#  extension_submission_id                   :integer
+#  id                                        :bigint(8)        not null, primary key
+#  teacher_id                                :bigint(8)
+#  extension_submission_id                   :bigint(8)
 #  year                                      :string
 #  rekomendasi_perwakilan_file_name          :string
 #  rekomendasi_perwakilan_content_type       :string

@@ -24,6 +24,7 @@ var ready = function() {
     no_results_text: "Maaf, tidak ditemukan!",
     width: "100%"
   });
+  $(".lock input").removeProp('required');
 
   $("#sk_submission_year").change(function(event) {
       // console.log($(this).val());
@@ -36,6 +37,7 @@ var ready = function() {
         })
         .done(function(data) {
         	data = JSON.parse(data)
+          $('#select_teachers_based_on_year').empty();
         	if (data) {
         		$.each(data, function(index, val) {
         			newOption = "<option value='"+val[1]+"'>"+val[0]+"</option>"

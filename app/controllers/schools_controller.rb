@@ -10,6 +10,7 @@ class SchoolsController < ApplicationController
   # GET /schools/1
   # GET /schools/1.json
   def show
+    return @teachers = @school.teachers.joins(:sks).where(sks:{year:2019}) if params[:year]
     @teachers = @school.teachers
   end
 

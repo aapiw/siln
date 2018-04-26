@@ -38,7 +38,6 @@
                         <td><%= teacher.number_of_extension %></td>
                         <td><%= teacher.expire.strftime('%d/%m/%Y') %></td>
                         <td><%= teacher.age %></td>
-                        <!-- <td><%#= teacher.status_sk %></td> -->
                         <% unless teacher.pns %>
                             <td>
                                 <% if teacher.sks.present? %>
@@ -48,13 +47,15 @@
                                             <td>
                                                 <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary mb-1 " target="blank">Lihat SK <%= sk.year %></a>
                                             </td>
-                                            <td><%= sk.approved_by_admin %></td>
-                                            <td><%= sk.sk_url %></td>
+                                            <td><%= sk.status %></td>
+                                            <!-- <td><%#= link_to "Download", sk.sk_untuk_guru.url, class: "", download: "#SK {}" if sk.sk_untuk_guru.present? %></td> -->
                                         </tr>
                                     </table>
                                     <% end %>
                                 <% else %>
-                                  <a href="<%= new_teacher_sk_path(teacher) %>" class="btn btn-primary " target="blank">Ajukan SK</a>
+                                <% unless current_school.admin %>
+                                  <a href="<%= new_teacher_sk_path(teacher) %>" class="btn btn-primary " target="blank">Mohon SK</a>
+                                  <% end %>
                                 <% end %>                        
                             </td>
                             <td>
@@ -71,7 +72,7 @@
                                         </tr>
                                     </table>
                                 <% else %>
-                                    <a href="<%= new_teacher_extension_of_task_path(teacher) %>" class="btn btn-primary" target="blank">Ajukan Perpanjangan</a>
+                                    <a href="<%= new_teacher_extension_of_task_path(teacher) %>" class="btn btn-primary" target="blank">Mohon Perpanjangan</a>
                                 <% end %>
                             </td>
                             <% else %>
@@ -80,25 +81,6 @@
                         <% end %>
                       </tr>
                      <% end %>
-                      <!-- <tr>
-                        <td>1</td>
-                        <td>Guru 1</td>
-                        <td>PNS</td>
-                        <td>30</td>
-                        <td>10</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>
-                        <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#permohonan_sk">Permohonan SK</button>
-                        <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#perpanjangan_sk">Perpanjangan SK</button>
-
-                            <a href="sekolah-siln-permohonan-sk.html" class="btn btn-primary mb-1" target="blank">Permohonan SK</a>
-                            <a href="perpanjangan_sk.html" class="btn btn-primary" target="blank">Perpanjangan SK</a>
-                        </td>
-                    </tr> -->
-                      
                     </tbody>
                   </table>
                 </div>

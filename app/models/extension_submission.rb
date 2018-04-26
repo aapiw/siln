@@ -2,19 +2,21 @@
 #
 # Table name: extension_submissions
 #
-#  id                              :integer          not null, primary key
-#  school_id                       :integer
+#  id                              :bigint(8)        not null, primary key
+#  school_id                       :bigint(8)
 #  year                            :string
 #  perpanjangan_tugas_file_name    :string
 #  perpanjangan_tugas_content_type :string
 #  perpanjangan_tugas_file_size    :integer
 #  perpanjangan_tugas_updated_at   :datetime
-#???  approved_by_school              :boolean          default(FALSE)
+#  approved_by_admin               :boolean          default(FALSE)
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #
 
 class ExtensionSubmission < ApplicationRecord
+	serialize :recent_extention, Array
+	
   has_many :teachers
 
   belongs_to :school

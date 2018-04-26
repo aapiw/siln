@@ -1,6 +1,6 @@
 class SksController < ApplicationController
   before_action :set_sk, only: [:show, :edit, :update, :destroy]
-  before_action :set_teacher, only: [:new, :edit]
+  before_action :set_teacher, only: [:new, :edit, :update]
 
 
   # GET /sks
@@ -31,11 +31,9 @@ class SksController < ApplicationController
     respond_to do |format|
       if @sk.save
         format.html { redirect_to sks_path, notice: 'SK berhasil dibuat' }
-        # format.json { render :show, status: :created, location: @sk }
       else
         format.html { render :new }
         flash["alert"] = @sk.errors.full_messages
-        # format.json { render json: @sk.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,14 +41,13 @@ class SksController < ApplicationController
   # PATCH/PUT /sks/1
   # PATCH/PUT /sks/1.json
   def update
-    respond_to do |format|
+    @teacher = respond_to do |format|
       if @sk.update(sk_params)
-        format.html { redirect_to sks_path, notice: 'SK berhasil diubah' }
-        # format.json { render :show, status: :ok, location: @sk }
+        path = current_school.admin ? school_path(@teacher.school.id) : teachers_path
+        format.html { redirect_to path, notice: 'SK berhasil diubah' }
       else
         format.html { render :edit }
         flash["alert"] = @sk.errors.full_messages
-        # format.json { render json: @sk.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,7 +58,6 @@ class SksController < ApplicationController
     @sk.destroy
     respond_to do |format|
       format.html { redirect_to sks_url, notice: 'SK berhasil dihapus' }
-      # format.json { head :no_content }
     end
   end
 

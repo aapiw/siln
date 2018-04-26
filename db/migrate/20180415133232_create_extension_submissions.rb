@@ -4,7 +4,8 @@ class CreateExtensionSubmissions < ActiveRecord::Migration[5.1]
       t.references :school, foreign_key: true
       t.string :year
       t.attachment :perpanjangan_tugas
-      t.boolean :approved_by_admin, default:false
+      t.text :recent_extention
+      # t.boolean :approved_by_admin, default:false
       
 
       t.timestamps

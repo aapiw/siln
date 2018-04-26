@@ -4,7 +4,12 @@ class ExtensionSubmissionsController < ApplicationController
   # GET /extension_submissions
   # GET /extension_submissions.json
   def index
-    @extension_submissions = ExtensionSubmission.all
+    if current_school.admin
+      @extension_submissions = ExtensionSubmission.all
+    else
+      @extension_submissions = current_school.extension_submissions
+    end
+    
   end
 
   # GET /extension_submissions/1
@@ -28,11 +33,10 @@ class ExtensionSubmissionsController < ApplicationController
 
     respond_to do |format|
       if @extension_submission.save
-        format.html { redirect_to @extension_submission, notice: 'Extension submission was successfully created.' }
-        format.json { render :show, status: :created, location: @extension_submission }
+        format.html { redirect_to @extension_submission, notice: 'Permohonan perpanjanganberhasil dibuat.' }
       else
         format.html { render :new }
-        format.json { render json: @extension_submission.errors, status: :unprocessable_entity }
+        flash["alert"] = @extension_submission.errors.full_messages
       end
     end
   end
@@ -42,11 +46,10 @@ class ExtensionSubmissionsController < ApplicationController
   def update
     respond_to do |format|
       if @extension_submission.update(extension_submission_params)
-        format.html { redirect_to @extension_submission, notice: 'Extension submission was successfully updated.' }
-        format.json { render :show, status: :ok, location: @extension_submission }
+        format.html { redirect_to @extension_submission, notice: 'Permohonan perpanjanganberhasil diperbarui.' }
       else
         format.html { render :edit }
-        format.json { render json: @extension_submission.errors, status: :unprocessable_entity }
+        flash["alert"] = @extension_submission.errors.full_messages
       end
     end
   end
@@ -56,8 +59,7 @@ class ExtensionSubmissionsController < ApplicationController
   def destroy
     @extension_submission.destroy
     respond_to do |format|
-      format.html { redirect_to extension_submissions_url, notice: 'Extension submission was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to extension_submissions_url, notice: 'Permohonan perpanjanganberhasil dihapus.' }
     end
   end
 

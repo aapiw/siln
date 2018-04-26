@@ -2,9 +2,8 @@
 #
 # Table name: sks
 #
-#  id                                 :integer          not null, primary key
-#  teacher_id                         :integer
-#  sk_submission_id                   :integer
+#  id                                 :bigint(8)        not null, primary key
+#  teacher_id                         :bigint(8)
 #  year                               :string
 #  permohonan_perwakilan_file_name    :string
 #  permohonan_perwakilan_content_type :string
@@ -65,7 +64,7 @@
 
 class Sk < ApplicationRecord
   belongs_to :teacher
-  belongs_to :sk_submission, optional:true
+  # belongs_to :sk_submission, optional:true
 
 	attr_accessor :admin
 	
@@ -91,9 +90,9 @@ class Sk < ApplicationRecord
 
 	validates_presence_of :year, :permohonan_perwakilan, :ijazah, :sertifikat_pendidik,
 												:nuptk, :sk_perwakilan, :ktp_or_paspor, :kk, :cv,
-												:biodata_ln, :form_biaya, :pernyataan
+												:biodata_ln, :form_biaya, :pernyataan, unless: :admin
 												
-	# validates_presence_of	:sk_untuk_guru, :note,  if: :admin
+	validates_presence_of	:sk_untuk_guru, :note,  if: :admin
 
 	validates_attachment_content_type :permohonan_perwakilan, :ijazah, :sertifikat_pendidik,
 																		:nuptk, :sk_perwakilan, :ktp_or_paspor, :kk, :cv,
@@ -111,19 +110,28 @@ class Sk < ApplicationRecord
 																	:sk_inpassing, :biodata_ln, :form_biaya, :pernyataan,
 																	:sk_untuk_guru, matches: [/jpe?g\Z/, /png\Z/, /JP?G\Z/, /PNG\Z/, /PDF\Z/, /pdf\Z/]
 
-	def approved_by_admin
+	def status
 		return '<span class="badge badge-success">Disetejui</span>'.html_safe if sk_untuk_guru.present?
-		return '<span class="badge badge-warning">Diajukan Sekolah</span>'.html_safe  if sk_submission.present?
+		# debugger
+		if SkSubmission.find_by_year(year).recent_sk.select{|d| d.to_s == id.to_s }.present?
+			'<span class="badge badge-warning">Diajukan</span>'.html_safe 
+		else
+			'<span class="badge badge-danger">Belum Diajukan</span>'.html_safe
+		end
 	end
 
-	def sk_url
-		return sk_submission.url if sk_untuk_guru.present?
-		return ''
-	end
+	# def sk_url
+	# 	return sk_untuk_guru.url if sk_untuk_guru.present?
+	# 	return ''
+	# end
 
 	class << self
 		def show_teachers_based_year teacher_ids, year
 			joins(:teacher).where("year = ? AND teacher_id IN (?)", year, teacher_ids)
+		end
+
+		def sk_active_year teacher_ids
+			joins(:teacher).where("teacher_id IN (?)", teacher_ids).pluck(:year).uniq
 		end
 
 		# def update_sk_submission_ids sk_submission_id, ids

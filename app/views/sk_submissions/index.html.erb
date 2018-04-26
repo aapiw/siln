@@ -15,6 +15,9 @@
                         <th>No</th>
                         <th>Tahun</th>
                         <th>Aksi</th>
+                        <% if current_school.admin %>
+                          <th>Sekolah</th>
+                        <% end %>
                       </tr>
                     </thead>
                     <tbody>
@@ -22,9 +25,16 @@
                       <tr>
                         <td><%=index+1 %></td>
                         <td><%= sk_submission.year %></td>
-                        <td>
-                        <%= link_to "Lihat", edit_school_sk_submission_path(current_school.id, sk_submission), target:"_blank", class:"btn btn-primary" %>
-                        </td>
+                        <% if current_school.admin %>
+                            <td><%= sk_submission.school.name %></td>
+                        <% end %>
+                          <td>
+                        <% if current_school.admin %>
+                          <%= link_to "Lihat", school_path(sk_submission.school.id, year:sk_submission.year) , target:"_blank", class:"btn btn-primary" %>
+                        <% else %>
+                          <%= link_to "Lihat", edit_school_sk_submission_path(current_school.id, sk_submission), target:"_blank", class:"btn btn-primary" %>
+                          </td>
+                        <% end %>
                       </tr>
                     <% end %>
                     </tbody>
@@ -38,31 +48,3 @@
         </div>
     </div><!-- .animated -->
 </div><!-- .content -->
-
-
-<!-- <h1>Sk Submissions</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Year</th>
-      <th>School</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <%# @sk_submissions.each do |sk_submission| %>
-      <tr>
-        <td><%#= sk_submission.year %></td>
-        <td><%#= sk_submission.school %></td>
-        <td><%#= link_to 'Show', sk_submission %></td>
-        <td><%#= link_to 'Edit', edit_sk_submission_path(sk_submission) %></td>
-        <td><%#= link_to 'Destroy', sk_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <%# end %>
-  </tbody>
-</table>
-
-<br> -->
-

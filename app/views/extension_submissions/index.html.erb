@@ -1,31 +1,49 @@
-<p id="notice"><%= notice %></p>
+<div class="content mt-3">
+  <div class="animated fadeIn">
+      <div class="row">
 
-<h1>Extension Submissions</h1>
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header">
+                  <strong class="card-title">DAFTAR PENGAJUAN SK</strong>
+              </div>
+              <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Tahun</th>
+                      <th>Aksi</th>
+                      <% if current_school.admin %>
+                        <th>Sekolah</th>
+                      <% end %>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <% @extension_submissions.each_with_index do |extension_submission, index| %>
+                    <tr>
+                      <td><%=index+1 %></td>
+                      <td><%= extension_submission.year %></td>
+                      <% if current_school.admin %>
+                          <td><%= extension_submission.school.name %></td>
+                      <% end %>
+                        <td>
+                      <% if current_school.admin %>
+                        <%= link_to "Lihat", school_path(extension_submission.school.id, year:extension_submission.year) , target:"_blank", class:"btn btn-primary" %>
+                      <% else %>
+                        <%= link_to "Lihat", edit_school_extension_submission_path(current_school.id, extension_submission), target:"_blank", class:"btn btn-primary" %>
+                      <% end %>
+                        </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+            <%= link_to 'Pengajuan Perpanjangan Baru', new_school_extension_submission_path(current_school.id), class:"btn btn-primary" %>
+      </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>School</th>
-      <th>Year</th>
-      <th>Approved by admin</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @extension_submissions.each do |extension_submission| %>
-      <tr>
-        <td><%= extension_submission.school %></td>
-        <td><%= extension_submission.year %></td>
-        <td><%#= extension_submission.approved_by_admin %></td>
-        <td><%= link_to 'Show', extension_submission %></td>
-        <td><%= link_to 'Edit', edit_extension_submission_path(extension_submission) %></td>
-        <td><%= link_to 'Destroy', extension_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Extension Submission', new_extension_submission_path %>
+      </div>
+  </div><!-- .animated -->
+</div><!-- .content -->

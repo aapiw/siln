@@ -2,8 +2,8 @@
 #
 # Table name: teachers
 #
-#  id                  :integer          not null, primary key
-#  school_id           :integer
+#  id                  :bigint(8)        not null, primary key
+#  school_id           :bigint(8)
 #  name                :string
 #  pns                 :boolean
 #  age                 :string

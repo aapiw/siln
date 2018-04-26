@@ -28,7 +28,7 @@
 	color: #dc3545;
 }
 .lock{
-	div, input, a:not([data-fancybox=gallery]){
+	input, select, textarea{
 		pointer-events:none;
 		opacity: 0.8;
 	}

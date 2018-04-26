@@ -5,7 +5,12 @@ class SkSubmissionsController < ApplicationController
   # GET /sk_submissions
   # GET /sk_submissions.json
   def index
-    @sk_submissions = SkSubmission.all
+    if current_school.admin
+      @sk_submissions = SkSubmission.all
+    else
+      @sk_submissions = current_school.sk_submissions
+    end
+    
   end
 
   # GET /sk_submissions/1
@@ -26,10 +31,9 @@ class SkSubmissionsController < ApplicationController
   # POST /sk_submissions.json
   def create
     sk_submission_params2 = sk_submission_params
-    sk_submission_params2["sk_ids"].reject!(&:blank?)
+    sk_submission_params2["recent_sk"].reject!(&:blank?)
 
     @sk_submission = SkSubmission.new(sk_submission_params2)
-
     respond_to do |format|
       if @sk_submission.save
         format.html { redirect_to sk_submissions_url, notice: 'Pengajuan SK berhasil dibuat.' }
@@ -44,7 +48,7 @@ class SkSubmissionsController < ApplicationController
   # PATCH/PUT /sk_submissions/1.json
   def update
     sk_submission_params2 = sk_submission_params
-    sk_submission_params2["sk_ids"].reject!(&:blank?)
+    sk_submission_params2["recent_sk"].reject!(&:blank?)
     respond_to do |format|
       if @sk_submission.update(sk_submission_params2)
         format.html { redirect_to sk_submissions_url, notice: 'Pengajuan SK berhasil diperbarui.' }
@@ -75,7 +79,8 @@ class SkSubmissionsController < ApplicationController
   private
 
     def set_teachers_based_on_year
-      @teachers_based_on_year = Sk.show_teachers_based_year(current_school.teachers.pluck(:id), @sk_submission.year || Time.now.year)
+      year = @sk_submission ? @sk_submission.year : Time.now.year
+      @teachers_based_on_year = Sk.show_teachers_based_year(current_school.teachers.pluck(:id), year.to_s)
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_sk_submission
@@ -84,6 +89,6 @@ class SkSubmissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sk_submission_params
-      params.require(:sk_submission).permit(:year, :school_id, :admin, sk_ids:[])
+      params.require(:sk_submission).permit(:year, :school_id, :admin, recent_sk:[])
     end
 end

@@ -1,32 +1,45 @@
-<%= form_with(model: extension_submission, local: true) do |form| %>
-  <% if extension_submission.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(extension_submission.errors.count, "error") %> prohibited this extension_submission from being saved:</h2>
+<div class="content mt-3">
+  <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+              <div class="card-header">
+                  <strong class="card-title">PENGAJUAN PERPANJANGN TUGAS</strong>
+              </div>
+              <div class="card-body card-block">
+                <%= form_with(model: extension_submission, local: true) do |form| %>
 
-      <ul>
-      <% extension_submission.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+                  <div class="form-group">
+                    <%= form.label :year, "Tahun"%>
+                    <%#= form.text_field :year, id: :extension_submission_year, class:"from-control" %>
+                    <%= form.select :year, Sk.sk_active_year(current_school.teachers.pluck(:id)), {include_hidden: false, :selected => extension_submission.year || Time.now.year}, id: :extension_submission_year, class:"form-control", data:{extension_submission_id:extension_submission.id} %>
+                  </div>
 
-  <div class="field">
-    <%= form.label :school_id %>
-    <%= form.text_field :school_id, id: :extension_submission_school_id %>
-  </div>
+                  <div class="form-group">
+                    <%= form.label :approved_by_admin %>
+                    <%= form.check_box :approved_by_admin, id: :extension_submission_approved_by_admin, class:"from-control" %>
+                  </div>
 
-  <div class="field">
-    <%= form.label :year %>
-    <%= form.text_field :year, id: :extension_submission_year %>
-  </div>
+                  <%= form.hidden_field :school_id, value:current_school.id, id: :extension_submission_school_id, required:true, placeholder:"", class:"from-control" %>
 
-  <div class="field">
-    <%= form.label :approved_by_admin %>
-    <%= form.check_box :approved_by_admin, id: :extension_submission_approved_by_admin %>
-  </div>
+                    <%= form.submit class:"btn btn-primary" %>
+                <% end %>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+                <%#= form.label :year, "Tahun" %>
+                  <%#= form.select :year, Sk.sk_active_year(current_school.teachers.pluck(:id)), {include_hidden: false, :selected => extension_submission.year || Time.now.year}, id: :extension_submission_year, class:"form-control", data:{extension_submission_id:extension_submission.id} %>
+
+                <%#= form.select(:recent_sk, @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }, {selected: extension_submission.recent_sk }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+
+              </div>
+          </div> <!-- .card -->
+
+        </div><!--/.col-->
+
+
+      </div>
+
+
+  </div><!-- .animated -->
+</div><!-- .content -->
+
+

@@ -2,9 +2,8 @@
 #
 # Table name: sks
 #
-#  id                                 :integer          not null, primary key
-#  teacher_id                         :integer
-#  sk_submission_id                   :integer
+#  id                                 :bigint(8)        not null, primary key
+#  teacher_id                         :bigint(8)
 #  year                               :string
 #  permohonan_perwakilan_file_name    :string
 #  permohonan_perwakilan_content_type :string

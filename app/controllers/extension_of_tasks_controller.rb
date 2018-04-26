@@ -30,11 +30,9 @@ class ExtensionOfTasksController < ApplicationController
     respond_to do |format|
       if @extension_of_task.save
         format.html { redirect_to extension_of_tasks_path, notice: 'Perpanjangan tugas berhasil dibuat.' }
-        # format.json { render :show, status: :created, location: @extension_of_task }
       else
         format.html { render :new }
         flash["alert"] = @extension_of_task.errors.full_messages
-        # format.json { render json: @extension_of_task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -45,11 +43,9 @@ class ExtensionOfTasksController < ApplicationController
     respond_to do |format|
       if @extension_of_task.update(extension_of_task_params)
         format.html { redirect_to @extension_of_task, notice: 'Perpanjangan tugas berhasil diubah.' }
-        # format.json { render :show, status: :ok, location: @extension_of_task }
       else
         format.html { render :edit }
         flash["alert"] = @extension_of_task.errors.full_messages
-        # format.json { render json: @extension_of_task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -60,7 +56,6 @@ class ExtensionOfTasksController < ApplicationController
     @extension_of_task.destroy
     respond_to do |format|
       format.html { redirect_to extension_of_tasks_url, notice: 'Perpanjangan tugas berhasil dihapus.' }
-      # format.json { head :no_content }
     end
   end
 
