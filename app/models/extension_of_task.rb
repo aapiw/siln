@@ -49,19 +49,39 @@ class ExtensionOfTask < ApplicationRecord
 
   validates_attachment_file_name :rekomendasi_perwakilan, :surat_persetujuan_setneg, :sk_mendikbud, :persetujuan_pemda_or_sekolah,
   																matches: [/jpe?g\Z/, /png\Z/, /JP?G\Z/, /PNG\Z/, /PDF\Z/, /pdf\Z/  ]
-	def approved_by_admin
-		return '<span class="badge badge-success">Disetejui</span>'.html_safe if sk_untuk_guru.present?
-		return '<span class="badge badge-warning">Diajukan Sekolah</span>'.html_safe  if sk_submission.present?
-	end
+	# def approved_by_admin
+	# 	return '<span class="badge badge-success">Disetejui</span>'.html_safe if sk_untuk_guru.present?
+	# 	return '<span class="badge badge-warning">Diajukan Sekolah</span>'.html_safe  if sk_submission.present?
+	# end
 
-	def sk_url
-		return sk_submission.url if sk_untuk_guru.present?
-		return ''
-	end
+  def status
+    return '<span class="badge badge-success">Diverifikasi</span>'.html_safe if approved_by_admin
+    if ExtensionSubmission.find_by_year(year).recent_extention.select{|d| d.to_s == id.to_s }.present?
+      '<span class="badge badge-warning">Diajukan</span>'.html_safe 
+    else
+      '<span class="badge badge-danger">Belum Diajukan</span>'.html_safe
+    end
+  end
+
+	# def sk_url
+	# 	return sk_submission.url if sk_untuk_guru.present?
+	# 	return ''
+	# end
 	
-	def approved_by_admin
-		return '<span class="badge badge-success">Disetejui</span>'.html_safe if extension_submission.present? and extension_submission.perpanjangan_tugas.present?
-		return '<span class="badge badge-warning">Diajukan Sekolah</span>'.html_safe if extension_submission.present? 
-	end
+	# def approved_by_admin
+	# 	return '<span class="badge badge-success">Diverifikasi</span>'.html_safe if extension_submission.present? and extension_submission.perpanjangan_tugas.present?
+	# 	return '<span class="badge badge-warning">Diajukan</span>'.html_safe if extension_submission.present? 
+	# end
+
+  class << self
+
+    def show_teachers_based_year teacher_ids, year
+      joins(:teacher).where("year = ? AND teacher_id IN (?)", year, teacher_ids)
+    end
+
+    def extention_active_year teacher_ids
+      joins(:teacher).where("teacher_id IN (?)", teacher_ids).pluck(:year).uniq
+    end
+  end
 
 end

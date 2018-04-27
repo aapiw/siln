@@ -69,21 +69,23 @@ class SkSubmissionsController < ApplicationController
   end
   
   def teachers_based_on_year
-    @teachers_based_on_year = Sk.show_teachers_based_year(current_school.teachers.pluck(:id), params[:year])
+    @teachers_based_on_year = Sk.show_teachers_based_year(@school.teachers.pluck(:id), params[:year])
     render json: @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }
-    # respond_to do |format|
-    #   format.json { render json: @teachers_based_on_year, status: :ok }
-    # end
   end
 
   private
 
     def set_teachers_based_on_year
       year = @sk_submission ? @sk_submission.year : Time.now.year
-      @teachers_based_on_year = Sk.show_teachers_based_year(current_school.teachers.pluck(:id), year.to_s)
+      @teachers_based_on_year = Sk.show_teachers_based_year(@school.teachers.pluck(:id), year.to_s)
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_sk_submission
+      if current_school.admin
+        @school = School.find(params[:school_id])
+      else
+        @school = current_school
+      end
       @sk_submission = SkSubmission.find(params[:id])
     end
 

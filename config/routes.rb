@@ -6,7 +6,13 @@ Rails.application.routes.draw do
       get 'teachers_based_on_year/:year' => :teachers_based_on_year, as: :teachers_based_on_year
     end 
   end
-  resources :extension_submissions#, except:[:new, :edit]
+  
+  resources :extension_submissions do #, except:[:new, :edit]
+    member do
+      get 'teachers_based_on_year/:year' => :teachers_based_on_year, as: :teachers_based_on_year
+    end 
+  end
+  
   resources :sks, except:[:new, :edit]
 
   resources :teachers do

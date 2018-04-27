@@ -112,7 +112,6 @@ class Sk < ApplicationRecord
 
 	def status
 		return '<span class="badge badge-success">Disetejui</span>'.html_safe if sk_untuk_guru.present?
-		# debugger
 		if SkSubmission.find_by_year(year).recent_sk.select{|d| d.to_s == id.to_s }.present?
 			'<span class="badge badge-warning">Diajukan</span>'.html_safe 
 		else

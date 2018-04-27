@@ -24,14 +24,22 @@ var ready = function() {
     no_results_text: "Maaf, tidak ditemukan!",
     width: "100%"
   });
-  $(".lock input").removeProp('required');
+  $(".lock input, .lock select ").removeProp('required');
 
-  $("#sk_submission_year").change(function(event) {
+  $("#active_year").change(function(event) {
       // console.log($(this).val());
-      sk_submission_id = $(this).data('sk-submission-id');
-      console.log(sk_submission_id);
+      var id = $(this).data('id');
+      // console.log(id);
+      // console.log($(this).data('type'));
+      // console.log($(this).val());
+      if ( $(this).data('type') == "sk" ) {
+        var url = '/sk_submissions/'+id+'/teachers_based_on_year/'+$(this).val();
+      } else {
+        // /extension_submissions/:id/teachers_based_on_year/:year
+        var url = '/extension_submissions/'+id+'/teachers_based_on_year/'+$(this).val();
+      }
       $.ajax({
-          url: '/sk_submissions/'+sk_submission_id+'/teachers_based_on_year/'+$(this).val(),
+          url: url,
           type: 'GET',
           dataType: 'script'
         })

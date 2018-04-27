@@ -4,21 +4,19 @@
         <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
-                  <strong class="card-title">TAMBAH PENGAJUAN SK</strong>
+                  <strong class="card-title">FORMULIR PENGAJUAN SK</strong>
               </div>
               <div class="card-body card-block">
                 <%= form_with(model: sk_submission, local: true) do |form| %>
                   <div class="form-group" >
                     <%= form.label :year, "Tahun" %>
-                    <!-- (Time.zone.now.year)..(Time.zone.now.year + 20) -->
-                      <%= form.select :year, Sk.sk_active_year(current_school.teachers.pluck(:id)), {include_hidden: false, :selected => sk_submission.year || Time.now.year}, id: :sk_submission_year, class:"form-control", data:{sk_submission_id:sk_submission.id} %>
+                      <%= form.select :year, Sk.sk_active_year(@school.teachers.pluck(:id)), {include_hidden: false, :selected => sk_submission.year || Time.now.year}, id: :active_year, class:"form-control", data:{id:sk_submission.id, type:"sk"} %>
                   </div>
                   <div>
-                  <%#debugger%>
                     <%= form.select(:recent_sk, @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }, {selected: sk_submission.recent_sk }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
                   </div>
                   <div class="form-group">
-                    <%= form.hidden_field :school_id, value:current_school.id, id: :sk_submission_school_id, required:true, placeholder:"", class:"from-control" %>
+                    <%= form.hidden_field :school_id, value:@school.id, id: :sk_submission_school_id, required:true, placeholder:"", class:"from-control" %>
                   </div>
                   <%= form.submit class:"btn btn-primary" %>
                 <% end %>

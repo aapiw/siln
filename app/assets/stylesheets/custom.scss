@@ -28,7 +28,7 @@
 	color: #dc3545;
 }
 .lock{
-	input, select, textarea{
+	input, select, textarea, .chosen-container{
 		pointer-events:none;
 		opacity: 0.8;
 	}
@@ -50,3 +50,14 @@
 // a:visited {
 // 	color: #000;
 // }
+.table table td, .table table th{
+	padding: 0.25rem;
+	.btn{
+		padding: .2rem .3rem
+	}
+}
+.table{
+	.btn{
+			padding: .2rem .3rem
+		}
+}

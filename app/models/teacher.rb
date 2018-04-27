@@ -15,8 +15,8 @@
 #
 
 class Teacher < ApplicationRecord
-	has_many :sks
-	has_many :extension_of_tasks
+	has_many :sks, dependent: :destroy
+	has_many :extension_of_tasks, dependent: :destroy
 
   belongs_to :school, optional:true
   # belongs_to :sk_submission, optional:true

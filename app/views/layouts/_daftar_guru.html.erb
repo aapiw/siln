@@ -26,6 +26,7 @@
                         <!-- <th>Ceklis verifikasi perpanjangan masa tugas</th> -->
                         <th>SK</th>
                         <th>Perpanjangan</th>
+                        <% unless current_school.admin %><th>Aksi</th><% end %>
                       </tr>
                     </thead>
                     <tbody>
@@ -41,22 +42,27 @@
                         <% unless teacher.pns %>
                             <td>
                                 <% if teacher.sks.present? %>
-                                    <% teacher.sks.each do |sk| %>
+                                <% teacher.sks.each do |sk| %>
                                     <table>
                                         <tr>
                                             <td>
-                                                <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary mb-1 " target="blank">Lihat SK <%= sk.year %></a>
+                                                <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary " target="blank"><%= sk.year %></a>
                                             </td>
                                             <td><%= sk.status %></td>
                                             <!-- <td><%#= link_to "Download", sk.sk_untuk_guru.url, class: "", download: "#SK {}" if sk.sk_untuk_guru.present? %></td> -->
                                         </tr>
                                     </table>
-                                    <% end %>
-                                <% else %>
-                                <% unless current_school.admin %>
-                                  <a href="<%= new_teacher_sk_path(teacher) %>" class="btn btn-primary " target="blank">Mohon SK</a>
-                                  <% end %>
-                                <% end %>                        
+                                <% end %>
+                            <% end %>                        
+                                <table>
+                                    <tr>
+                                        <td>
+                                        <% unless current_school.admin %>
+                                          <a href="<%= new_teacher_sk_path(teacher) %>" class="btn btn-primary " target="blank">Mohon Baru</a>
+                                          <% end %>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                             <td>
                                 <!-- approved_by_admin -->
@@ -65,19 +71,34 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">Lihat Perpanjangan</a>
+                                                <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank"><%= ext.year %></a>
                                             </td>
-                                            <td><%= ext.approved_by_admin %></td>
+                                            <td><%= ext.status %></td>
                                     <% end %>
                                         </tr>
                                     </table>
                                 <% else %>
-                                    <a href="<%= new_teacher_extension_of_task_path(teacher) %>" class="btn btn-primary" target="blank">Mohon Perpanjangan</a>
                                 <% end %>
+                                <table>
+                                    <tr>
+                                        <td>
+                                        <% unless current_school.admin %>
+                                            <a href="<%= new_teacher_extension_of_task_path(teacher) %>" class="btn btn-primary" target="blank">Mohon Baru</a>
+                                        <% end %>
+                                    </td>
+                                    </tr>
+                                </table>
+
                             </td>
                             <% else %>
                             <td></td>
                             <td></td>
+                        <% end %>
+                        <% unless current_school.admin %>
+                            <td>
+                                <a href="<%= edit_teacher_path(teacher)%>" class="btn btn-primary">Edit</a>
+                                <%= link_to "Hapus", teacher_path(teacher), method:"delete", :"data-confirm" => "Anda yakin ?", class: "btn btn-primary" %>
+                            </td>
                         <% end %>
                       </tr>
                      <% end %>

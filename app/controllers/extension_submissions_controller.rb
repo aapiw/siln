@@ -1,5 +1,7 @@
 class ExtensionSubmissionsController < ApplicationController
-  before_action :set_extension_submission, only: [:show, :edit, :update, :destroy]
+  before_action :set_school
+  before_action :set_extension_submission, only: [:show, :edit, :update, :destroy, :teachers_based_on_year]
+  before_action :set_teachers_based_on_year, only:[:new, :edit, :update]
 
   # GET /extension_submissions
   # GET /extension_submissions.json
@@ -29,11 +31,14 @@ class ExtensionSubmissionsController < ApplicationController
   # POST /extension_submissions
   # POST /extension_submissions.json
   def create
-    @extension_submission = ExtensionSubmission.new(extension_submission_params)
+    extension_submission_params2 = extension_submission_params
+    extension_submission_params2["recent_extention"].reject!(&:blank?)
+
+    @extension_submission = ExtensionSubmission.new(extension_submission_params2)
 
     respond_to do |format|
       if @extension_submission.save
-        format.html { redirect_to @extension_submission, notice: 'Permohonan perpanjanganberhasil dibuat.' }
+        format.html { redirect_to extension_submissions_path, notice: 'Permohonan perpanjanganberhasil dibuat.' }
       else
         format.html { render :new }
         flash["alert"] = @extension_submission.errors.full_messages
@@ -44,9 +49,11 @@ class ExtensionSubmissionsController < ApplicationController
   # PATCH/PUT /extension_submissions/1
   # PATCH/PUT /extension_submissions/1.json
   def update
+    extension_submission_params2 = extension_submission_params
+    extension_submission_params2["recent_extention"].reject!(&:blank?)
     respond_to do |format|
-      if @extension_submission.update(extension_submission_params)
-        format.html { redirect_to @extension_submission, notice: 'Permohonan perpanjanganberhasil diperbarui.' }
+      if @extension_submission.update(extension_submission_params2)
+        format.html { redirect_to extension_submissions_path, notice: 'Permohonan perpanjangan berhasil diperbarui.' }
       else
         format.html { render :edit }
         flash["alert"] = @extension_submission.errors.full_messages
@@ -63,14 +70,39 @@ class ExtensionSubmissionsController < ApplicationController
     end
   end
 
+  def teachers_based_on_year
+    @teachers_based_on_year = ExtensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), params[:year])
+    render json: @teachers_based_on_year.map {|ext| [ ext.teacher.name, ext.id ] }
+  end
+
   private
+    def set_teachers_based_on_year
+      year = @sk_submission ? @sk_submission.year : Time.now.year
+      @teachers_based_on_year = ExtensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), year.to_s)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
+    def set_school
+      if params[:school_id]
+        params_school = params[:school_id]
+      else
+        params_school = params[:extension_submission][:school_id] if params[:extension_submission]
+      end
+      if params_school
+        if current_school.admin
+          @school = School.find(params_school) 
+        else
+          @school = current_school
+        end
+      end
+    end
+    
     def set_extension_submission
       @extension_submission = ExtensionSubmission.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def extension_submission_params
-      params.require(:extension_submission).permit(:school_id, :year, :approved_by_admin)
+      params.require(:extension_submission).permit(:school_id, :year, :perpanjangan_tugas, :admin, recent_extention:[])
     end
 end

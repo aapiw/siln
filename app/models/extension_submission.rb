@@ -15,13 +15,16 @@
 #
 
 class ExtensionSubmission < ApplicationRecord
+	attr_accessor :admin
+
 	serialize :recent_extention, Array
 	
   has_many :teachers
 
   belongs_to :school
   
-  validates_presence_of :year, :perpanjangan_tugas
+  validates_presence_of :year, :recent_extention, unless: :admin
+  validates_presence_of :perpanjangan_tugas, if: :admin
 
   has_attached_file :perpanjangan_tugas
 
@@ -34,5 +37,14 @@ class ExtensionSubmission < ApplicationRecord
  	# 	return '<span class="badge badge-success">Disetejui</span>'.html_safe if perpanjangan_tugas.present?
  	# 	# return '<span class="badge badge-warning">Diajukan Sekolah</span>'.html_safe  if sk_submission.present?
  	# end
+ 	def status
+ 		html=""
+ 		if perpanjangan_tugas.path.present?
+ 			html = '<span class="badge badge-success">Dikabulkan</span> | <a href='+perpanjangan_tugas.url+' download="Perpanjangan_Tugas_'+year+'_'+school.name+'">Download</a>'
+ 		else
+ 			html = '<span class="badge badge-danger">Belum Dikabulkan</span>'
+ 		end
+ 		html.html_safe
+ 	end
 
 end

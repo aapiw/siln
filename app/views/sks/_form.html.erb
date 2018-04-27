@@ -25,7 +25,7 @@ Download SK Mendikbud
         <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
-                  <strong class="card-title">Pengajuan SK Untuk Guru <%= @teacher.name rescue nil %></strong>
+                  <strong class="card-title">PERMOHONAN SK GURU <%= @teacher.name.capitalize rescue nil %></strong>
               </div>
               <div class="card-body card-block">
                 <%= form_with(model: sk, local: true) do |form| %>
@@ -121,7 +121,7 @@ Download SK Mendikbud
 
                     <div class="<%= current_school.admin ? '' : 'lock' %>">
                     <div class="row form-group">
-                      <div class="col col-md-3"><label class=" form-control-label">Disetujui</label></div>
+                      <div class="col col-md-3"><label class=" form-control-label">Diverifikasi</label></div>
                       <div class="col col-md-9">
                         <div class="form-check-inline form-check">
                           <label for="teacher_pns" class="form-check-label ">

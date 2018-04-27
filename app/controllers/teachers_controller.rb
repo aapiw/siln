@@ -46,7 +46,7 @@ class TeachersController < ApplicationController
   def update
     respond_to do |format|
       if @teacher.update(teacher_params)
-        format.html { redirect_to @teacher, notice: 'Guru berhasil diubah.' }
+        format.html { redirect_to teachers_path, notice: 'Guru berhasil diubah.' }
       else
         format.html { render :edit }
         flash["alert"] = @teacher.errors.full_messages

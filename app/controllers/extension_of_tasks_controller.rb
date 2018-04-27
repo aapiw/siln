@@ -67,7 +67,7 @@ class ExtensionOfTasksController < ApplicationController
 
     def set_teacher
       @teacher = Teacher.find(params[:teacher_id]) if params[:teacher_id]
-      @teacher = Teacher.find(params[:sk][:teacher_id]) if params[:sk] and params[:sk][:teacher_id]
+      @teacher = Teacher.find(params[:extension_of_task][:teacher_id]) if params[:extension_of_task] and params[:extension_of_task][:teacher_id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
