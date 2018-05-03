@@ -58,6 +58,8 @@
    <!--/.col-->
   </div>
 </div>
+<%= render "layouts/filters", school: current_school %>
 
-<%= render "layouts/filters" %>
-<%= render "layouts/daftar_guru" %>
+<div id="daftar_guru" class="waitme">
+  <%= render "layouts/daftar_guru" %>
+</div>

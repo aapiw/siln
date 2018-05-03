@@ -7,25 +7,36 @@
                     <strong class="card-title">Filter</strong>
                 </div>
                 <div class="card-body">
-                  <form action="" method="post" >
-                    <div class="row form-group">
-                        <div class="col col-md-9">
-                        <label class=" form-control-label">Tahun</label>
-                          <div class="form-check">
-                            <div class="radio">
-                              <label for="radio1" class="form-check-label ">
-                                <input required type="radio" id="radio1" name="radios" value="option1" class="form-check-input">2018
-                              </label>
-                            </div>
-                            <div class="radio">
-                              <label for="radio2" class="form-check-label ">
-                                <input required type="radio" id="radio2" name="radios" value="option2" class="form-check-input">2019
-                              </label>
-                            </div>
+                <!-- teacher_teachers_based_year_url -->
+                <%= form_with url: school_path(school), method: :get, id: "teacher_filter" do |form| %>
+                  <div class="row form-group">
+                      <div class="col col-md-9">
+                      <label class=" form-control-label">Tahun</label>
+                        <div class="form-check">
+                        <div class="radio">
+                          <label for="radio1" class="form-check-label ">
+                            <%= form.radio_button :year, '', class:"form-check-input", checked:false %>Semua
+                          </label>
+                        </div>
+                          <div class="radio">
+                            <label for="radio1" class="form-check-label ">
+                              <%= form.radio_button :year, '2018', class:"form-check-input" %>2018
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label for="radio2" class="form-check-label ">
+                              <!-- <input required type="radio" id="radio2" name="radios" value="option2" class="form-check-input">2019 -->
+                              <%= form.radio_button :year, '2019', class:"form-check-input" %>2019
+                            </label>
                           </div>
                         </div>
                       </div>
-                  </form>
+                    </div>
+
+                  <%#= form.hidden_field :filter, value:true %>
+                  <%= form.submit class: "d-none" %>
+                <% end %>
+
                 </div>
             </div> <!-- .card -->
 

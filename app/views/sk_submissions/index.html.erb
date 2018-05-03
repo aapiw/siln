@@ -41,7 +41,7 @@
                   </table>
                 </div>
             </div>
-              <%= link_to 'Pengajuan SK Baru', new_school_sk_submission_path(current_school.id), class:"btn btn-primary" %>
+              <%= link_to 'Pengajuan SK Baru', new_school_sk_submission_path(current_school.id), class:"btn btn-primary" unless current_school.admin %>
         </div>
 
 

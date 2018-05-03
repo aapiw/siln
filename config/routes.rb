@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :extension_of_tasks, only:[:new, :edit]
   end
   resources :schools do
+    # get :teachers_based_year
     resources :sk_submissions#, only:[:new, :edit]
     resources :extension_submissions
   end

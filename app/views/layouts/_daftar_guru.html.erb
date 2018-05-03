@@ -1,4 +1,3 @@
-
 <div class="content mt-3">
     <div class="animated fadeIn">
         <div class="row">
@@ -9,6 +8,7 @@
                     <strong class="card-title">DAFTAR PERMOHONAN GURU</strong>
                 </div>
                 <div class="card-body">
+                <% if @teachers.present? %>
                   <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                       <tr>
@@ -56,11 +56,11 @@
                             <% end %>                        
                                 <table>
                                     <tr>
-                                        <td>
                                         <% unless current_school.admin %>
+                                        <td>
                                           <a href="<%= new_teacher_sk_path(teacher) %>" class="btn btn-primary " target="blank">Mohon Baru</a>
-                                          <% end %>
                                         </td>
+                                          <% end %>
                                     </tr>
                                 </table>
                             </td>
@@ -81,11 +81,11 @@
                                 <% end %>
                                 <table>
                                     <tr>
-                                        <td>
                                         <% unless current_school.admin %>
+                                        <td>
                                             <a href="<%= new_teacher_extension_of_task_path(teacher) %>" class="btn btn-primary" target="blank">Mohon Baru</a>
+                                        </td>
                                         <% end %>
-                                    </td>
                                     </tr>
                                 </table>
 
@@ -104,6 +104,9 @@
                      <% end %>
                     </tbody>
                   </table>
+                  <% else %>
+                  <div class="text-center">Tidak ada hasil</div>
+                  <% end %>
                 </div>
             </div>
         </div>

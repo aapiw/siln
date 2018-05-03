@@ -29,6 +29,7 @@
 //= require lib/data-table/buttons.print.min
 //= require lib/data-table/buttons.colVis.min
 //= require lib/data-table/datatables-init
+//= require waitMe.min
 
 
 //= require lib/chosen/chosen.jquery.min

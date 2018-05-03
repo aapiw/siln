@@ -9,5 +9,6 @@
 = require style
 = require jquery.fancybox.min.css
 = require lib/chosen/chosen.min
+= require waitMe.min
 = require custom
 */

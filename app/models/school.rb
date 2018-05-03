@@ -35,6 +35,8 @@ class School < ApplicationRecord
 	validates :password, length: { minimum: 6 }
 	# validates :email, uniqueness: true
 
+	scope :default, -> { where(admin:false) }
+	# scope :consulates, -> { where(role: "consulate") }
 
 	def count_pns
 		self.teachers.where(pns:true).count
