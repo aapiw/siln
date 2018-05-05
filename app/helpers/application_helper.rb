@@ -25,11 +25,11 @@ def see_donwload paperclip_obj, caption
 	if is_image?(paperclip_obj)
 		html += "<a data-fancybox='gallery' href='#{paperclip_obj.url}' data-caption='#{caption}'>Lihat Image</a>"
 		html+=" | "
-		html += "<a href='#{paperclip_obj.url}' download='#{ caption +" "+@teacher.name.titleize}'>Download Image</a>"
+		html += "<a href='#{paperclip_obj.url}' download='#{ caption +" "+@teacher.name.titleize rescue nil }'>Download Image</a>"
 	else
 		html += "<a href='#{paperclip_obj.url}' >Lihat PDF</a>"
 		html+=" | "
-		html += "<a href='#{paperclip_obj.url}' download='#{ caption +" "+@teacher.name.titleize}'>Download PDF</a>"
+		html += "<a href='#{paperclip_obj.url}' download='#{ caption +" "+@teacher.name.titleize rescue nil }'>Download PDF</a>"
 	end
 
 	html += "</div>"

@@ -35,11 +35,11 @@ ExtensionSubmission.new(school_id:1, recent_extention:[4], year:"2019").save(val
 ExtensionSubmission.new(school_id:1, recent_extention:[3], year:"2020").save(validate: false)
 
 # School 1 create teachers
-Teacher.create(school_id:1, name:"Doni", age:"40", period_of_teaching:"15", number_of_extension:3, expire:Time.now.next_month)
-Teacher.create(school_id:1, name:"Donita", age:"40", period_of_teaching:"15", number_of_extension:3, expire:Time.now.next_month)
-Teacher.create(school_id:1, name:"Dede", age:"40", period_of_teaching:"15", number_of_extension:3, expire:Time.now.next_month)
-Teacher.create(school_id:1, name:"Budi", age:"40", period_of_teaching:"15", number_of_extension:3, expire:Time.now.next_month)
-Teacher.create(school_id:1, name:"Rendi", pns:true, age:"40", period_of_teaching:"15", number_of_extension:3, expire:Time.now.next_month)
+Teacher.create(school_id:1, name:"Doni", age:"40", period_of_teaching:"15", expire:Time.now.next_month)
+Teacher.create(school_id:1, name:"Donita", age:"40", period_of_teaching:"15", expire:Time.now.next_month)
+Teacher.create(school_id:1, name:"Dede", age:"40", period_of_teaching:"15", expire:Time.now.next_month)
+Teacher.create(school_id:1, name:"Budi", age:"40", period_of_teaching:"15", expire:Time.now.next_month)
+Teacher.create(school_id:1, name:"Rendi", pns:true, age:"40", period_of_teaching:"15", expire:Time.now.next_month)
 
 # Teachers of school create sk submission
 Teacher.find(1).sks.new(year: "2018").save(validate:false)

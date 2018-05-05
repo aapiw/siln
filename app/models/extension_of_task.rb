@@ -4,7 +4,6 @@
 #
 #  id                                        :bigint(8)        not null, primary key
 #  teacher_id                                :bigint(8)
-#  extension_submission_id                   :bigint(8)
 #  year                                      :string
 #  rekomendasi_perwakilan_file_name          :string
 #  rekomendasi_perwakilan_content_type       :string
@@ -24,21 +23,23 @@
 #  surat_persetujuan_setneg_updated_at       :datetime
 #  assessment                                :string
 #  note                                      :string
+#  approved_by_admin                         :boolean          default(FALSE)
 #  created_at                                :datetime         not null
 #  updated_at                                :datetime         not null
 #
 
 class ExtensionOfTask < ApplicationRecord
-   
+  attr_accessor :admin
+  
   belongs_to :teacher
-  belongs_to :extension_submission
 
   has_attached_file :rekomendasi_perwakilan
   has_attached_file :surat_persetujuan_setneg
   has_attached_file :persetujuan_pemda_or_sekolah
   has_attached_file :sk_mendikbud
 
-  validates_presence_of :rekomendasi_perwakilan, :surat_persetujuan_setneg, :sk_mendikbud, :persetujuan_pemda_or_sekolah
+  validates_presence_of :rekomendasi_perwakilan, :surat_persetujuan_setneg, :sk_mendikbud, :persetujuan_pemda_or_sekolah, unless: :admin
+  validates_presence_of :note, if: :admin
 
   validates_attachment_content_type :rekomendasi_perwakilan, :surat_persetujuan_setneg,
   																	:sk_mendikbud, :persetujuan_pemda_or_sekolah, content_type: ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'],
@@ -54,24 +55,42 @@ class ExtensionOfTask < ApplicationRecord
 	# 	return '<span class="badge badge-warning">Diajukan Sekolah</span>'.html_safe  if sk_submission.present?
 	# end
 
-  def status
-    return '<span class="badge badge-success">Diverifikasi</span>'.html_safe if approved_by_admin
-    if ExtensionSubmission.find_by_year(year).recent_extention.select{|d| d.to_s == id.to_s }.present?
-      '<span class="badge badge-warning">Diajukan</span>'.html_safe 
+  def has_submission
+    relation = ExtensionSubmission.find_by_year(year)
+    has_relation = relation ? relation.recent_extention.select{|d| d.to_s == id.to_s }.present? : nil
+
+    if has_relation
+      ExtensionSubmission.find(relation.id)
     else
-      '<span class="badge badge-danger">Belum Diajukan</span>'.html_safe
+      nil
     end
+    
   end
 
-	# def sk_url
-	# 	return sk_submission.url if sk_untuk_guru.present?
-	# 	return ''
-	# end
-	
-	# def approved_by_admin
-	# 	return '<span class="badge badge-success">Diverifikasi</span>'.html_safe if extension_submission.present? and extension_submission.perpanjangan_tugas.present?
-	# 	return '<span class="badge badge-warning">Diajukan</span>'.html_safe if extension_submission.present? 
-	# end
+  def uploaded
+    if has_submission and has_submission.perpanjangan_tugas.present? and has_submission.perpanjangan_tugas.path
+      '<span class="badge badge-success">Sudah</span>'.html_safe
+    else 
+      '<span class="badge badge-warning">Belum</span>'.html_safe
+    end 
+  end
+
+  def status
+    html = ""
+    if has_submission
+      html +='<span class="badge badge-warning">Diajukan</span> '
+      if has_submission.perpanjangan_tugas.present? and has_submission.perpanjangan_tugas.path
+        html +='<span class="badge badge-success">Diupload</span> '
+      end
+    else
+      html +='<span class="badge badge-danger">Belum Diajukan</span> ' 
+    end
+
+    if approved_by_admin
+      html += '<span class="badge badge-success">Diverifikasi</span> '
+    end
+    html.html_safe
+  end
 
   class << self
 

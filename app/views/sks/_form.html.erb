@@ -25,7 +25,7 @@ Download SK Mendikbud
         <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
-                  <strong class="card-title">PERMOHONAN SK GURU <%= @teacher.name.capitalize rescue nil %></strong>
+                  <strong class="card-title">PERMOHONAN SK GURU <%= @teacher.name.upcase rescue nil %></strong>
               </div>
               <div class="card-body card-block">
                 <%= form_with(model: sk, local: true) do |form| %>
@@ -37,7 +37,7 @@ Download SK Mendikbud
 
                     <div class="form-group">
                       <%= form.label :year, "Pilih tahun" %>
-                      <%= form.select :year, (Time.zone.now.year)..(Time.zone.now.year + 20), {include_hidden: false, :selected => sk.year || Time.now.year}, id: :sk_year, class:"form-control" %>
+                      <%= form.select :year, params[:year].to_i..(Time.zone.now.year + 20), {include_hidden: false, :selected => sk.year || params[:year]}, id: :sk_year, class:"form-control" %>
                     </div>
 
                     <div class="form-group">

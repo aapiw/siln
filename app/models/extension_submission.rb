@@ -9,7 +9,7 @@
 #  perpanjangan_tugas_content_type :string
 #  perpanjangan_tugas_file_size    :integer
 #  perpanjangan_tugas_updated_at   :datetime
-#  approved_by_admin               :boolean          default(FALSE)
+#  recent_extention                :text
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #
@@ -46,5 +46,15 @@ class ExtensionSubmission < ApplicationRecord
  		end
  		html.html_safe
  	end
+
+  class << self
+    def next_year
+      return Time.now.year if count < 1
+      all.map(&:year).sort.last.to_i+1
+    end
+    def has_extention
+      ExtensionOfTask.extention_active_year
+    end
+  end
 
 end

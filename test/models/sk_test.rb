@@ -58,6 +58,7 @@
 #  sk_untuk_guru_content_type         :string
 #  sk_untuk_guru_file_size            :integer
 #  sk_untuk_guru_updated_at           :datetime
+#  approved_by_admin                  :boolean          default(FALSE)
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
 #

@@ -14,61 +14,87 @@ View Terverifikasi
         <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
-                  <strong class="card-title">Permohonan Perpanjangan Tugas Untuk Guru <%= @teacher.name %></strong>
+                  <strong class="card-title">PERMOHONAN Perpanjangan Tugas Untuk Guru <%= @teacher.name.upcase %></strong>
               </div>
               <div class="card-body card-block">
-                
-                <%= form_with(model: extension_of_task, local: true) do |form| %>
-                  <div class="form-group">
-                    <%= form.hidden_field :teacher_id, value:@teacher.id, id: :sk_teacher_id %>
+              <% lock = true if current_school.admin || extension_of_task.approved_by_admin %>
+                  <%= form_with(model: extension_of_task, local: true) do |form| %>
+                  <div class="<%= lock ? 'lock' : ''  %>">
+                    <div class="form-group">
+                      <%= form.hidden_field :teacher_id, value:@teacher.id, id: :sk_teacher_id %>
+                    </div>
+
+                    <div class="form-group">
+                      <%= form.label :year, "Tahun" %>
+                      <%= form.select :year, (params[:year].to_i)..(Time.zone.now.year + 20), {include_hidden: false}, class:"form-control" %>
+                    </div>
+
+                    <div class="form-group">
+                      <%= form.label :rekomendasi_perwakilan, "Upload Rekomendasi Perwakilan" %>
+                      <%= form.file_field :rekomendasi_perwakilan, id: :extension_of_task_rekomendasi_perwakilan, required:true, placeholder:"Upload Rekomendasi Perwakilan", class:"form-control" %>
+                      <%= see_donwload(extension_of_task.rekomendasi_perwakilan, "Rekomendasi Perwakilan")  if extension_of_task.persisted? %>
+                    </div>
+
+                    <div class="form-group">
+                      <%= form.label :persetujuan_pemda_or_sekolah, "Upload Surat Persetujuan Setneg" %>
+                      <%= form.file_field :persetujuan_pemda_or_sekolah, id: :extension_of_task_persetujuan_pemda_or_sekolah, required:true, placeholder:"Upload Surat Persetujuan Setneg", class:"form-control" %>
+                      <%= see_donwload(extension_of_task.persetujuan_pemda_or_sekolah, "Surat Persetujuan Setneg")  if extension_of_task.persisted? %>
+                    </div>
+
+                    <div class="form-group">
+                      <%= form.label :sk_mendikbud, "Upload SK Mendikbud" %>
+                      <%= form.file_field :sk_mendikbud, id: :extension_of_task_sk_mendikbud, required:true, placeholder:"Upload SK Mendikbud", class:"form-control" %>
+                      <%= see_donwload(extension_of_task.sk_mendikbud, "Surat SK Mendikbud")  if extension_of_task.persisted? %>
+                    </div>
+
+                    <div class="form-group">
+                      <%= form.label :surat_persetujuan_setneg, "Upload Surat Persetujuan Setneg" %>
+                      <%= form.file_field :surat_persetujuan_setneg, id: :extension_of_task_surat_persetujuan_setneg, required:true, placeholder:"", class:"form-control" %>
+                      <%= see_donwload(extension_of_task.surat_persetujuan_setneg, "Surat Persetujuan Setneg")  if extension_of_task.persisted? %>
+                    </div>
                   </div>
 
-                  <div class="form-group">
-                    <%= form.label :year, "Tahun" %>
-                    <%= form.select :year, (Time.zone.now.year)..(Time.zone.now.year + 20), {:selected => Time.now.year}, required:true, class:"form-control" %>
-                  </div>
+                  <% if current_school.admin || extension_of_task.approved_by_admin %>
+                    <hr>
+                      <h5>Keputusan</h5>
+                    <hr>
+                    <div class="<%= current_school.admin ? '' : 'lock' %>">
+                      <div class="form-group">
+                        <%= form.label :assessment, "Penilaian" %>
+                        <%= form.text_area :assessment, id: :extension_of_task_assessment, placeholder:"Penilaian", class:"form-control" %>
+                      </div>
 
-                  <div class="form-group">
-                    <%= form.label :rekomendasi_perwakilan, "Upload Rekomendasi Perwakilan" %>
-                    <%= form.file_field :rekomendasi_perwakilan, id: :extension_of_task_rekomendasi_perwakilan, required:true, placeholder:"Upload Rekomendasi Perwakilan", class:"form-control" %>
-                    <%= see_donwload(extension_of_task.rekomendasi_perwakilan, "Rekomendasi Perwakilan")  if extension_of_task.persisted? %>
-                  </div>
-
-                  <div class="form-group">
-                    <%= form.label :persetujuan_pemda_or_sekolah, "Upload Surat Persetujuan Setneg" %>
-                    <%= form.file_field :persetujuan_pemda_or_sekolah, id: :extension_of_task_persetujuan_pemda_or_sekolah, required:true, placeholder:"Upload Surat Persetujuan Setneg", class:"form-control" %>
-                    <%= see_donwload(extension_of_task.persetujuan_pemda_or_sekolah, "Surat Persetujuan Setneg")  if extension_of_task.persisted? %>
-                  </div>
-
-                  <div class="form-group">
-                    <%= form.label :sk_mendikbud, "Upload SK Mendikbud" %>
-                    <%= form.file_field :sk_mendikbud, id: :extension_of_task_sk_mendikbud, required:true, placeholder:"Upload SK Mendikbud", class:"form-control" %>
-                    <%= see_donwload(extension_of_task.sk_mendikbud, "Surat SK Mendikbud")  if extension_of_task.persisted? %>
-                  </div>
-
-                  <div class="form-group">
-                    <%= form.label :surat_persetujuan_setneg, "Upload Surat Persetujuan Setneg" %>
-                    <%= form.file_field :surat_persetujuan_setneg, id: :extension_of_task_surat_persetujuan_setneg, required:true, placeholder:"", class:"form-control" %>
-                    <%= see_donwload(extension_of_task.surat_persetujuan_setneg, "Surat Persetujuan Setneg")  if extension_of_task.persisted? %>
-                  </div>
-
-                  <!-- <div class="form-group">
-                    <%#= form.label :assessment, "Penilaian" %>
-                    <%#= form.text_area :assessment, id: :extension_of_task_assessment, placeholder:"Penilaian", class:"form-control" %>
-                  </div> -->
-
-                  <!-- <div class="form-group"> -->
-                    <%#= form.label :note, "Catatatan" %>
-                    <%#= form.text_area :note, id: :extension_of_task_note, required:true, placeholder:"Catatan", class:"form-control" %>
-                  <!-- </div> -->
-
-                  <!-- <div class="form-group"> -->
-                    <%#= form.label :approved_by_school %>
-                    <%#= form.check_box :approved_by_school, id: :extension_of_task_approved_by_school, required:true, placeholder:"", class:"form-control" %>
-                  <!-- </div> -->
-
-                    <%= form.submit class:"btn btn-primary" %>
-                <% end %>
+                      <div class="form-group">
+                        <%= form.label :note, "Catatatan" %>
+                        <%= form.text_area :note, id: :extension_of_task_note, required:true, placeholder:"Catatan", class:"form-control" %>
+                      </div>
+                      <div class="row form-group">
+                        <div class="col col-md-3"><label class=" form-control-label">Diverifikasi :</label></div>
+                        <div class="col col-md-9">
+                          <div class="form-check-inline form-check">
+                            <label for="teacher_pns" class="form-check-label ">
+                              <%= form.check_box :approved_by_admin, class:"form-check-input" %>Ya
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <div class="col col-md-3"><label class=" form-control-label">Diupload :</label></div>
+                        <div class="col col-md-9">
+                          <div class="form-check-inline form-check">
+                            <label for="teacher_pns" class="form-check-label ">
+                              <%= extension_of_task.uploaded %>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% if current_school.admin %>
+                      <%= form.hidden_field :admin, value:true %>
+                    <% end %>
+                  <% end %>
+                  <%= form.submit class:"btn btn-primary" %>
+                  <% end %>
 
               </div>
           </div>

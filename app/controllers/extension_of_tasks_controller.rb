@@ -26,10 +26,9 @@ class ExtensionOfTasksController < ApplicationController
   # POST /extension_of_tasks.json
   def create
     @extension_of_task = ExtensionOfTask.new(extension_of_task_params)
-
     respond_to do |format|
       if @extension_of_task.save
-        format.html { redirect_to extension_of_tasks_path, notice: 'Perpanjangan tugas berhasil dibuat.' }
+        format.html { redirect_to teachers_path, notice: 'Perpanjangan tugas berhasil dibuat.' }
       else
         format.html { render :new }
         flash["alert"] = @extension_of_task.errors.full_messages
@@ -40,9 +39,10 @@ class ExtensionOfTasksController < ApplicationController
   # PATCH/PUT /extension_of_tasks/1
   # PATCH/PUT /extension_of_tasks/1.json
   def update
+    path = current_school.admin ? extension_submissions_path : teachers_path
     respond_to do |format|
       if @extension_of_task.update(extension_of_task_params)
-        format.html { redirect_to @extension_of_task, notice: 'Perpanjangan tugas berhasil diubah.' }
+        format.html { redirect_to path, notice: 'Perpanjangan tugas berhasil diubah.' }
       else
         format.html { render :edit }
         flash["alert"] = @extension_of_task.errors.full_messages
@@ -55,7 +55,7 @@ class ExtensionOfTasksController < ApplicationController
   def destroy
     @extension_of_task.destroy
     respond_to do |format|
-      format.html { redirect_to extension_of_tasks_url, notice: 'Perpanjangan tugas berhasil dihapus.' }
+      format.html { redirect_to teachers_path, notice: 'Perpanjangan tugas berhasil dihapus.' }
     end
   end
 
@@ -72,6 +72,6 @@ class ExtensionOfTasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def extension_of_task_params
-      params.require(:extension_of_task).permit(:teacher_id, :year, :rekomendasi_perwakilan, :persetujuan_pemda_or_sekolah, :sk_mendikbud, :surat_persetujuan_setneg, :assessment, :note, :approved_by_school)
+      params.require(:extension_of_task).permit(:teacher_id, :year, :rekomendasi_perwakilan, :persetujuan_pemda_or_sekolah, :sk_mendikbud, :surat_persetujuan_setneg, :assessment, :note, :approved_by_admin, :admin)
     end
 end

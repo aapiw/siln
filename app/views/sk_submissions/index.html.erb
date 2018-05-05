@@ -14,10 +14,10 @@
                       <tr>
                         <th>No</th>
                         <th>Tahun</th>
-                        <th>Aksi</th>
                         <% if current_school.admin %>
                           <th>Sekolah</th>
                         <% end %>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -30,7 +30,7 @@
                         <% end %>
                           <td>
                         <% if current_school.admin %>
-                          <%= link_to "Lihat", school_path(sk_submission.school.id, year:sk_submission.year) , target:"_blank", class:"btn btn-primary" %>
+                          <%= link_to "Lihat", school_path(sk_submission.school.id, year:sk_submission.year, sk:true) , target:"_blank", class:"btn btn-primary" %>
                         <% else %>
                           <%= link_to "Lihat", edit_school_sk_submission_path(current_school.id, sk_submission), target:"_blank", class:"btn btn-primary" %>
                           </td>
@@ -41,7 +41,7 @@
                   </table>
                 </div>
             </div>
-              <%= link_to 'Pengajuan SK Baru', new_school_sk_submission_path(current_school.id), class:"btn btn-primary" unless current_school.admin %>
+              <%= link_to 'Pengajuan SK Baru', new_school_sk_submission_path(current_school.id, year:SkSubmission.next_year), class:"btn btn-primary" unless current_school.admin %>
         </div>
 
 

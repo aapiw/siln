@@ -1,4 +1,5 @@
 class SkSubmissionsController < ApplicationController
+  before_action :set_school
   before_action :set_sk_submission, only: [:show, :edit, :update, :destroy, :teachers_based_on_year]
   before_action :set_teachers_based_on_year, only:[:new, :edit]
 
@@ -74,9 +75,26 @@ class SkSubmissionsController < ApplicationController
   end
 
   private
+    def set_school
+      if params[:school_id]
+        params_school = params[:school_id]
+      else
+        params_school = params[:sk_submissions][:school_id] if params[:sk_submissions]
+      end
+
+      if params_school
+        if current_school.admin
+          @school = School.find(params_school) 
+        else
+          @school = current_school
+        end
+      else
+          @school = current_school
+      end
+    end
 
     def set_teachers_based_on_year
-      year = @sk_submission ? @sk_submission.year : Time.now.year
+      year = @sk_submission ? @sk_submission.year : params[:year]
       @teachers_based_on_year = Sk.show_teachers_based_year(@school.teachers.pluck(:id), year.to_s)
     end
     # Use callbacks to share common setup or constraints between actions.

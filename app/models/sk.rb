@@ -58,13 +58,13 @@
 #  sk_untuk_guru_content_type         :string
 #  sk_untuk_guru_file_size            :integer
 #  sk_untuk_guru_updated_at           :datetime
+#  approved_by_admin                  :boolean          default(FALSE)
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
 #
 
 class Sk < ApplicationRecord
   belongs_to :teacher
-  # belongs_to :sk_submission, optional:true
 
 	attr_accessor :admin
 	
@@ -109,15 +109,42 @@ class Sk < ApplicationRecord
 																	:nuptk, :sk_perwakilan, :ktp_or_paspor, :kk, :cv,
 																	:sk_inpassing, :biodata_ln, :form_biaya, :pernyataan,
 																	:sk_untuk_guru, matches: [/jpe?g\Z/, /png\Z/, /JP?G\Z/, /PNG\Z/, /PDF\Z/, /pdf\Z/]
+  def has_submission
+    relation = SkSubmission.find_by_year(year)
+    has_relation = relation ? relation.recent_sk.select{|d| d.to_s == id.to_s }.present? : nil
 
-	def status
-		return '<span class="badge badge-success">Disetejui</span>'.html_safe if sk_untuk_guru.present?
-		if SkSubmission.find_by_year(year).recent_sk.select{|d| d.to_s == id.to_s }.present?
-			'<span class="badge badge-warning">Diajukan</span>'.html_safe 
-		else
-			'<span class="badge badge-danger">Belum Diajukan</span>'.html_safe
-		end
-	end
+    if has_relation
+      SkSubmission.find(relation.id)
+    else
+      nil
+    end
+    
+  end
+  
+  def status
+    html = ""
+    if has_submission
+      html +='<span class="badge badge-warning">Diajukan</span> '
+    else
+      html +='<span class="badge badge-danger">Belum Diajukan</span> ' 
+    end
+    if sk_untuk_guru.path.present?
+      html += '<span class="badge badge-success">Diupload</span> '
+    end
+    if approved_by_admin
+      html += '<span class="badge badge-success">Diverifikasi</span> '
+    end
+    html.html_safe
+  end
+
+	# def status
+	# 	return '<span class="badge badge-success">Disetejui</span>'.html_safe if sk_untuk_guru.present?
+	# 	if SkSubmission.find_by_year(year).recent_sk.select{|d| d.to_s == id.to_s }.present?
+	# 		'<span class="badge badge-warning">Diajukan</span>'.html_safe 
+	# 	else
+	# 		'<span class="badge badge-danger">Belum Diajukan</span>'.html_safe
+	# 	end
+	# end
 
 	# def sk_url
 	# 	return sk_untuk_guru.url if sk_untuk_guru.present?

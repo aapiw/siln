@@ -14,10 +14,10 @@
                       <th>No</th>
                       <th>Tahun</th>
                       <th>Status</th>
-                      <th>Aksi</th>
                       <% if current_school.admin %>
                         <th>Sekolah</th>
                       <% end %>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -31,9 +31,10 @@
                       <% end %>
                       <td>
                         <% if current_school.admin %>
-                          <%= link_to "Lihat", edit_school_extension_submission_path(extension_submission.school.id, extension_submission) , target:"_blank", class:"btn btn-primary" %>
+                          <%= link_to "Lihat", school_path(extension_submission.school, year:extension_submission.year, extention:true) , target:"_blank", class:"btn btn-primary" %>
+                          <%= link_to "Upload", edit_school_extension_submission_path(extension_submission.school.id, extension_submission, year:extension_submission.year ) , target:"_blank", class:"btn btn-primary" %>
                         <% else %>
-                          <%= link_to "Lihat", edit_school_extension_submission_path(extension_submission.school.id, extension_submission), target:"_blank", class:"btn btn-primary" %>
+                          <%= link_to "Lihat", edit_school_extension_submission_path(extension_submission.school.id, extension_submission, year:extension_submission.year), target:"_blank", class:"btn btn-primary" %>
                         <% end %>
                       </td>
                     </tr>
@@ -42,7 +43,7 @@
                 </table>
               </div>
           </div>
-            <%= link_to 'Pengajuan Perpanjangan Baru', new_school_extension_submission_path(current_school.id), class:"btn btn-primary" unless current_school.admin %>
+            <%= link_to 'Pengajuan Perpanjangan Baru', new_school_extension_submission_path(current_school.id, year:ExtensionSubmission.next_year), class:"btn btn-primary" unless current_school.admin %>
       </div>
 
 

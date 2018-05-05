@@ -32,6 +32,9 @@
 		pointer-events:none;
 		opacity: 0.8;
 	}
+	label{
+		pointer-events:none;
+	}
 }
 
 [data-fancybox=gallery]{
@@ -60,4 +63,17 @@
 	.btn{
 			padding: .2rem .3rem
 		}
+}
+
+.blinking {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+.card-header .card-title{
+	text-transform: uppercase;
 }

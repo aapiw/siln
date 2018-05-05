@@ -24,44 +24,49 @@ var ready = function() {
     no_results_text: "Maaf, tidak ditemukan!",
     width: "100%"
   });
+
+  $(".standardSelect:required").siblings(".chosen-container").prepend("<label id='message'><span class='required'> (harus diisi)</span></label>")
+
   $(".lock input, .lock select ").removeProp('required');
 
   $("#active_year").change(function(event) {
-    // console.log($(this).val());
     var id = $(this).data('id');
     // console.log(id);
-    // console.log($(this).data('type'));
-    // console.log($(this).val());
-    if ($(this).data('type') == "sk") {
-      var url = '/sk_submissions/' + id + '/teachers_based_on_year/' + $(this).val();
+    if (id != "") {
+      if ($(this).data('type') == "sk") {
+        var url = '/sk_submissions/' + id + '/teachers_based_on_year/' + $(this).val();
+      } else {
+        var url = '/extension_submissions/' + id + '/teachers_based_on_year/' + $(this).val();
+      }
+      $.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'script',
+        })
+        .done(function(data) {
+          data = JSON.parse(data)
+          $('#select_teachers_based_on_year').empty();
+          if (data) {
+            $.each(data, function(index, val) {
+              newOption = "<option value='" + val[1] + "'>" + val[0] + "</option>"
+              $('#select_teachers_based_on_year').append(newOption);
+            });
+          }
+          $('#select_teachers_based_on_year').trigger("chosen:updated");
+          console.log("success");
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
     } else {
-      // /extension_submissions/:id/teachers_based_on_year/:year
-      var url = '/extension_submissions/' + id + '/teachers_based_on_year/' + $(this).val();
+      $('#select_teachers_based_on_year').empty();
+      $('#select_teachers_based_on_year').trigger("chosen:updated");
     }
-    $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'script'
-      })
-      .done(function(data) {
-        data = JSON.parse(data)
-        $('#select_teachers_based_on_year').empty();
-        if (data) {
-          $.each(data, function(index, val) {
-            newOption = "<option value='" + val[1] + "'>" + val[0] + "</option>"
-            $('#select_teachers_based_on_year').append(newOption);
-          });
-        }
-        $('#select_teachers_based_on_year').trigger("chosen:updated");
-        console.log("success");
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
   });
+
   $("#teacher_filter").change(function(event) {
     $(this).find("input[type=submit]").click();
   });
@@ -72,9 +77,8 @@ var ready = function() {
       color: "#2196F3"
     });
   }).on('ajax:complete', function(event, xhr, settings) {
-        console.log("complete");
-    // $('.waitme .card').waitMe("hide");
-  })
+    // console.log("complete");
+  });
 
 } //end ready
 

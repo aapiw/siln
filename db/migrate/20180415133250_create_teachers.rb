@@ -7,7 +7,7 @@ class CreateTeachers < ActiveRecord::Migration[5.1]
       t.boolean :pns
       t.string :age
       t.string :period_of_teaching
-      t.integer :number_of_extension
+      # t.integer :number_of_extension
       t.date :expire
 
       t.timestamps

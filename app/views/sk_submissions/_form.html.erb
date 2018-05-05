@@ -10,7 +10,7 @@
                 <%= form_with(model: sk_submission, local: true) do |form| %>
                   <div class="form-group" >
                     <%= form.label :year, "Tahun" %>
-                      <%= form.select :year, Sk.sk_active_year(@school.teachers.pluck(:id)), {include_hidden: false, :selected => sk_submission.year || Time.now.year}, id: :active_year, class:"form-control", data:{id:sk_submission.id, type:"sk"} %>
+                      <%= form.select :year, params[:year].to_i..(Time.zone.now.year + 20), {include_hidden: false, :selected => sk_submission.year || params[:year]}, id: :active_year, class:"form-control", data:{id:sk_submission.id, type:"sk"} %>
                   </div>
                   <div>
                     <%= form.select(:recent_sk, @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }, {selected: sk_submission.recent_sk }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>

@@ -2,13 +2,12 @@
 #
 # Table name: sk_submissions
 #
-#  id                :bigint(8)        not null, primary key
-#  year              :string
-#  school_id         :bigint(8)
-#  recent_sk         :text
-#  approved_by_admin :boolean          default(FALSE)
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id         :bigint(8)        not null, primary key
+#  year       :string
+#  school_id  :bigint(8)
+#  recent_sk  :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 class SkSubmission < ApplicationRecord
@@ -26,5 +25,11 @@ class SkSubmission < ApplicationRecord
   # def save_sks
 
   # end
+  class << self
+  	def next_year
+      return Time.now.year if count < 1
+      all.map(&:year).sort.last.to_i+1
+    end
+  end
 
 end

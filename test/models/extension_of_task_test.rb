@@ -4,7 +4,6 @@
 #
 #  id                                        :bigint(8)        not null, primary key
 #  teacher_id                                :bigint(8)
-#  extension_submission_id                   :bigint(8)
 #  year                                      :string
 #  rekomendasi_perwakilan_file_name          :string
 #  rekomendasi_perwakilan_content_type       :string
@@ -24,6 +23,7 @@
 #  surat_persetujuan_setneg_updated_at       :datetime
 #  assessment                                :string
 #  note                                      :string
+#  approved_by_admin                         :boolean          default(FALSE)
 #  created_at                                :datetime         not null
 #  updated_at                                :datetime         not null
 #

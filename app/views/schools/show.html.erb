@@ -1,5 +1,5 @@
 
-<%= render "layouts/filters", school: @school %>
+<%= render "layouts/filters", school: @school unless current_school.admin %>
 
 <div id="daftar_guru">
   <%= render "layouts/daftar_guru" %>

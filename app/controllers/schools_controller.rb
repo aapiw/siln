@@ -11,19 +11,19 @@ class SchoolsController < ApplicationController
   # GET /schools/1.json
   def show
     if params[:year].present?
-      # @teachers = @school.teachers.includes(:sks).where(sks:{year:params[:year]})
-      # @teachers = @school.teachers.includes(:sks, :extension_of_tasks).where(sks:{year:params[:year]}, extension_of_tasks:{year:params[:year]})
-      @teachers = @school.teachers.includes(:sks).where(sks:{year:params[:year]})
-      @teachers = @school.teachers.includes(:extension_of_tasks).where(extension_of_tasks:{year:params[:year]}) unless @teachers.present?
+      @filter = true
+      if params[:extention].present?
+        @teachers = @school.teachers.includes(:extension_of_tasks).where(extension_of_tasks:{year:params[:year]})#.sort
+      elsif params[:sk].present?
+        @teachers = @school.teachers.includes(:sks).where(sks:{year:params[:year]})
+      else
+      @teachers = @school.teachers.joins("RIGHT JOIN sks ON sks.teacher_id = teachers.id RIGHT JOIN extension_of_tasks ON extension_of_tasks.teacher_id = teachers.id").where("sks.year = ? OR extension_of_tasks.year = ?", params[:year], params[:year]).uniq
+        # @teachers = @school.teachers#.includes(:sks, :extension_of_tasks).where("sks.year = ? OR extension_of_tasks.year = ?"
+        # @teachers = @school.teachers.includes(:sks, :extension_of_tasks).where(extension_of_tasks:{year:params[:year]}) if @teachers.blank?
+      end
     else
       @teachers = @school.teachers.includes(:sks, :extension_of_tasks)
     end
-    # respond_to do |format|
-    #   format.js
-    #   format.html
-    # end
-    # render json: @teachers_based_on_year.map {|ext| [ ext.teacher.name, ext.id ] }
-    
   end
 
   # GET /schools/new

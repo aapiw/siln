@@ -8,41 +8,30 @@
               </div>
               <div class="card-body card-block">
                 <%= form_with(model: extension_submission, local: true) do |form| %>
-                  <div class="<%= current_school.admin ? 'lock': '' %>">
+                  <div class="<%= current_school.admin ? 'lock': '' %> <%= extension_submission.perpanjangan_tugas.path ? 'lock': '' %>" >
                     <div class="form-group">
                       <%= form.label :year, "Tahun"%>
-                      <%= form.select :year, ExtensionOfTask.extention_active_year(@school.teachers.pluck(:id)), {include_hidden: false, :selected => extension_submission.year || Time.now.year}, id: :active_year, class:"form-control", data:{id:extension_submission.id, type:"ext"} %>
+                      <%= form.select :year, params[:year].to_i..(Time.zone.now.year + 20), {include_hidden: false, :selected => extension_submission.year || params[:year], school_id:@school.id}, id: :active_year, class:"form-control", data:{id:extension_submission.id, type:"ext"} %>
                     </div>
                     <div class="form-group">
                       <%= form.select(:recent_extention, @teachers_based_on_year.map {|ext| [ ext.teacher.name, ext.id ] }, {selected: extension_submission.recent_extention }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
                     </div>
                   </div>
 
-                  <% if current_school.admin || extension_submission.approved_by_admin %>
+                  <% if current_school.admin || extension_submission.perpanjangan_tugas.path %>
                     <div class="<%= current_school.admin ? '' : 'lock'  %>">
                       <hr>
                         <h5>Keputusan</h5>
                       <hr>
-                      <!-- <div class="row form-group">
-                        <div class="col col-md-3">
-                          <%#= form.label :approved_by_admin,"Verifikasi", class:"form-control-label" %>
-                        </div>
-                        <div class="col col-md-9">
-                          <div class="form-check-inline form-check">
-                            <label for="teacher_pns" class="form-check-label ">
-                              <%#= form.check_box :approved_by_admin, class:"form-check-input" %>Ya
-                            </label>
-                          </div>
-                        </div>
-                      </div> -->
-
                       <div class="form-group">
                         <%= form.label :perpanjangan_tugas, "Upload Perpanjangan Tugas" %>
                         <%= form.file_field :perpanjangan_tugas, id: :extension_submission_perpanjangan_tugas, required:true, placeholder:"", class:"form-control" %>
-                        <%#= see_donwload(extension_submission.perpanjangan_tugas, "Surat Persetujuan Setneg")  if extension_submission.persisted? %>
+                        <%= see_donwload(extension_submission.perpanjangan_tugas, "Surat Perpanjangan Tugas")  if extension_submission.persisted? %>
                       </div>
 
+                      <% if current_school.admin %>
                       <%= form.hidden_field :admin, value:true %>
+                      <% end %>
                     </div>
                   <% end %>
 

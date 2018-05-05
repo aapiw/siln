@@ -66,18 +66,18 @@ class ExtensionSubmissionsController < ApplicationController
   def destroy
     @extension_submission.destroy
     respond_to do |format|
-      format.html { redirect_to extension_submissions_url, notice: 'Permohonan perpanjanganberhasil dihapus.' }
+      format.html { redirect_to extension_submissions_url, notice: 'Permohonan perpanjangan berhasil dihapus.' }
     end
   end
 
   def teachers_based_on_year
-    @teachers_based_on_year = ExtensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), params[:year])
+    @teachers_based_on_year = ExtensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), params[:year])  
     render json: @teachers_based_on_year.map {|ext| [ ext.teacher.name, ext.id ] }
   end
 
   private
     def set_teachers_based_on_year
-      year = @sk_submission ? @sk_submission.year : Time.now.year
+      year = @sk_submission ? @sk_submission.year : params[:year]
       @teachers_based_on_year = ExtensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), year.to_s)
     end
 
@@ -88,12 +88,15 @@ class ExtensionSubmissionsController < ApplicationController
       else
         params_school = params[:extension_submission][:school_id] if params[:extension_submission]
       end
+
       if params_school
         if current_school.admin
           @school = School.find(params_school) 
         else
           @school = current_school
         end
+      else
+          @school = current_school
       end
     end
     

@@ -30,7 +30,7 @@ class SksController < ApplicationController
 
     respond_to do |format|
       if @sk.save
-        format.html { redirect_to sks_path, notice: 'SK berhasil dibuat' }
+        format.html { redirect_to root_path, notice: 'SK berhasil dibuat' }
       else
         format.html { render :new }
         flash["alert"] = @sk.errors.full_messages
