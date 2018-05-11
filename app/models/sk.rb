@@ -65,8 +65,9 @@
 
 class Sk < ApplicationRecord
   belongs_to :teacher
+  belongs_to :sk_submission, optional:true
 
-	attr_accessor :admin
+	attr_accessor :admin, :pns
 	
 	scope :search_year, -> (year) { where('extract(year  from users.created_at) = ?', year) }
 	# scope :display_teacher, -> (year)
@@ -88,9 +89,12 @@ class Sk < ApplicationRecord
 	has_attached_file :pernyataan
 	has_attached_file :sk_untuk_guru
 
-	validates_presence_of :year, :permohonan_perwakilan, :ijazah, :sertifikat_pendidik,
+	validates_presence_of :permohonan_perwakilan, :ijazah, :sertifikat_pendidik,
 												:nuptk, :sk_perwakilan, :ktp_or_paspor, :kk, :cv,
-												:biodata_ln, :form_biaya, :pernyataan, unless: :admin
+												:biodata_ln, :form_biaya, :pernyataan,
+												if: -> record { !record.admin && !record.pns }
+
+	validates_presence_of :year, unless: :admin
 												
 	validates_presence_of	:sk_untuk_guru, :note,  if: :admin
 
@@ -109,21 +113,21 @@ class Sk < ApplicationRecord
 																	:nuptk, :sk_perwakilan, :ktp_or_paspor, :kk, :cv,
 																	:sk_inpassing, :biodata_ln, :form_biaya, :pernyataan,
 																	:sk_untuk_guru, matches: [/jpe?g\Z/, /png\Z/, /JP?G\Z/, /PNG\Z/, /PDF\Z/, /pdf\Z/]
-  def has_submission
-    relation = SkSubmission.find_by_year(year)
-    has_relation = relation ? relation.recent_sk.select{|d| d.to_s == id.to_s }.present? : nil
+  # def has_submission
+  #   relation = SkSubmission.find_by_year(year)
+  #   has_relation = relation ? relation.recent_sk.select{|d| d.to_s == id.to_s }.present? : nil
 
-    if has_relation
-      SkSubmission.find(relation.id)
-    else
-      nil
-    end
+  #   if has_relation
+  #     SkSubmission.find(relation.id)
+  #   else
+  #     nil
+  #   end
     
-  end
+  # end
   
   def status
     html = ""
-    if has_submission
+    if sk_submission
       html +='<span class="badge badge-warning">Diajukan</span> '
     else
       html +='<span class="badge badge-danger">Belum Diajukan</span> ' 
@@ -136,6 +140,9 @@ class Sk < ApplicationRecord
     end
     html.html_safe
   end
+  # def status
+  	
+  # end
 
 	# def status
 	# 	return '<span class="badge badge-success">Disetejui</span>'.html_safe if sk_untuk_guru.present?
@@ -152,7 +159,7 @@ class Sk < ApplicationRecord
 	# end
 
 	class << self
-		def show_teachers_based_year teacher_ids, year
+		def show_teachers_based_year teacher_ids=nil, year
 			joins(:teacher).where("year = ? AND teacher_id IN (?)", year, teacher_ids)
 		end
 

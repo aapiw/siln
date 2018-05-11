@@ -14,7 +14,7 @@
                       <%= form.select :year, params[:year].to_i..(Time.zone.now.year + 20), {include_hidden: false, :selected => extension_submission.year || params[:year], school_id:@school.id}, id: :active_year, class:"form-control", data:{id:extension_submission.id, type:"ext"} %>
                     </div>
                     <div class="form-group">
-                      <%= form.select(:recent_extention, @teachers_based_on_year.map {|ext| [ ext.teacher.name, ext.id ] }, {selected: extension_submission.recent_extention }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+                      <%= form.select(:extention_ids, @teachers_based_on_year.map {|ext| [ ext.teacher.name, ext.id ] }, {selected: extension_submission.extension_of_tasks.pluck(:id) }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
                     </div>
                   </div>
 

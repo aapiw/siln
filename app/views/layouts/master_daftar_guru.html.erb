@@ -1,0 +1,228 @@
+<!-- <th>Status SK</th> -->
+<!-- <th>Ceklis verifikasi SK mendikbud</th> -->
+<!-- <th>Ceklis upload SK mendikbud</th> -->
+<!-- <th>Ceklis verifikasi perpanjangan masa tugas</th> -->
+<div class="content mt-3">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <% 
+              title =  "DAFTAR PERMOHONAN GURU"
+              if params[:sk] or params[:extention]
+                  type = params[:sk] ?  "DAFTAR PENGAJUAN SK" : "DAFTAR PENGAJUAN PERPANJANGAN TUGAS"
+                  title = "#{type} #{ @school.name } TAHUN #{params[:year]}"
+              end
+            %>
+            <strong class="card-title"><%= title %></strong>
+          </div>
+          <div class="card-body">
+            <% if @teachers.present? %>
+              <table id="data-table" class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>PNS</th>
+                    <th>Masa mengajar</th>
+                    <th>Banyaknya perpanjangan</th>
+                    <th>Masa berlaku</th>
+                    <th>Usia</th>
+                    <th class="<%= params[:extention] ? 'd-none' : '' %>">SK</th>
+                    <th class="<%= params[:sk] ? 'd-none' : '' %>">Perpanjangan</th>
+                    <% unless current_school.admin %>
+                      <th>Aksi</th>
+                    <% end %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @teachers.each_with_index do |teacher, index| %>
+                    <tr>
+                      <td>
+                        <%=index+1 %>
+                      </td>
+                      <td>
+                        <%= teacher.name %>
+                      </td>
+                      <td>
+                        <%= teacher.print_pns %>
+                      </td>
+                      <td>
+                        <%= teacher.period_of_teaching %>
+                      </td>
+                      <td>
+                        <%= teacher.count_extension %>
+                      </td>
+                      <td>
+                        <%= teacher.print_expire %>
+                      </td>
+                      <td>
+                        <%= teacher.age %>
+                      </td>
+
+                      <% unless teacher.pns %>
+                        <td class="<%= params[:extention] ? 'd-none' : '' %>">
+                          <% if teacher.sks.present? %>
+                            <% if @filter %>
+                              <% sk = teacher.sks.find_by_year(params[:year]) %>
+                                <% if sk %>
+                                <table>
+                                  <tr>
+                                    <td>
+                                      <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary " target="blank">
+                                        <%= sk.year %>
+                                      </a>
+                                      <td>
+                                        <%= sk.status %>
+                                      </td>
+                                    </td>
+                                  </tr>
+                                </table>
+                              <% end %>
+                            <% else %>
+                              <% teacher.sks.each do |sk| %>
+                                <table>
+                                  <tr>
+                                    <td>
+                                      <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary " target="blank">
+                                        <%= sk.year %>
+                                      </a>
+                                    </td>
+                                    <td>
+                                      <%= sk.status %>
+                                    </td>
+                                    <!-- <td><%#= link_to "Download", sk.sk_untuk_guru.url, class: "", download: "#SK {}" if sk.sk_untuk_guru.present? %></td> -->
+                                  </tr>
+                                </table>
+                              <% end %>
+                            <% end %>
+                          <% end %>
+                            <table>
+                              <tr>
+                                <% unless current_school.admin %>
+                                  <td>
+                                    <a href="<%= new_teacher_sk_path(teacher, year:teacher.sk_next_year) %>" class="btn btn-primary " target="blank">Mohon Baru</a>
+                                  </td>
+                                <% end %>
+                              </tr>
+                            </table>
+                        </td>
+                        <td class="<%= params[:sk] ? 'd-none' : '' %>">
+                          <% if teacher.extension_of_tasks.present? %>
+                            <% if @filter %>
+                              <% ext = teacher.extension_of_tasks.find_by_year(params[:year]) %>
+                                <% if ext %>
+                                  <table>
+                                    <tr>
+                                      <td>
+                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
+                                          <%= ext.year %>
+                                        </a>
+                                      </td>
+                                      <td>
+                                        <%= ext.status %>
+                                      </td>
+                                    </tr>
+                                  </table>
+                              <% end %>
+                            <% else %>
+                                <% teacher.extension_of_tasks.each do |ext| %>
+                                  <table>
+                                    <tr>
+                                      <td>
+                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
+                                          <%= ext.year %>
+                                        </a>
+                                      </td>
+                                      <td>
+                                        <%= ext.status %>
+                                      </td>
+                                    </tr>
+                                  </table>
+                              <% end %>
+                            <% end %>
+                          <% end %>
+                          <table>
+                            <tr>
+                              <% unless current_school.admin %>
+                                <td>
+                                  <a href="<%= new_teacher_extension_of_task_path(teacher, year:teacher.ext_next_year) %>" class="btn btn-primary" target="blank">Mohon Baru</a>
+                                </td>
+                                <% end %>
+                            </tr>
+                          </table>
+                        </td>
+                      <% else %><!-- PNS -->
+                        <!-- COPY -->
+                        <td class="<%= params[:extention] ? 'd-none' : '' %>">-</td>
+                          <td class="<%= params[:sk] ? 'd-none' : '' %>">
+                            <% if teacher.extension_of_tasks.present? %>
+                              <% if @filter %>
+                                <% ext = teacher.extension_of_tasks.find_by_year(params[:year]) %>
+                                  <% if ext %>
+                                    <table>
+                                      <tr>
+                                        <td>
+                                          <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
+                                            <%= ext.year %>
+                                          </a>
+                                        </td>
+                                        <td>
+                                          <%= ext.status %>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  <% end %>
+                              <% else %>
+                                <% teacher.extension_of_tasks.each do |ext| %>
+                                  <table>
+                                    <tr>
+                                      <td>
+                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
+                                          <%= ext.year %>
+                                        </a>
+                                      </td>
+                                      <td>
+                                        <%= ext.status %>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+                            <table>
+                              <tr>
+                                <% unless current_school.admin %>
+                                  <% if teacher.count_extension < 2 %>
+                                    <td>
+                                      <a href="<%= new_teacher_extension_of_task_path(teacher, year:teacher.ext_next_year) %>" class="btn btn-primary" target="blank">Mohon Baru</a>
+                                    </td>
+                                  <% end %>
+                                <% end %>
+                              </tr>
+                            </table>
+                            <!-- END -->
+                          </td>
+                      <% end %>
+                        <% unless current_school.admin %>
+                          <td>
+                            <a href="<%= edit_teacher_path(teacher)%>" class="btn btn-primary mb-1">Edit</a>
+                            <%= link_to "Hapus", teacher_path(teacher), method:"delete", :"data-confirm" => "Anda yakin ingin menghapus guru #{teacher.name}?", class: "btn btn-primary" %>
+                          </td>
+                        <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <div class="text-center">Tidak ada hasil</div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- .animated -->
+</div>
+<!-- .content

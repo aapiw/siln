@@ -25,7 +25,21 @@ var ready = function() {
     width: "100%"
   });
 
-  $(".standardSelect:required").siblings(".chosen-container").prepend("<label id='message'><span class='required'> (harus diisi)</span></label>")
+  // $(".select_sk_ids").on('change', function(evt, params) {
+  //   // console.log("change");
+  //   // console.log(evt, params);
+  //   if (params["selected"]) {
+      
+  //   // console.log("selected");
+  //   $(this).parent("form")
+
+  //   } else {
+  //   // console.log("deselected");
+
+  //   }
+  // });
+
+  // $(".standardSelect:required").siblings(".chosen-container").prepend("<label id='message'><span class='required'> (harus diisi)</span></label>")
 
   $(".lock input, .lock select ").removeProp('required');
 

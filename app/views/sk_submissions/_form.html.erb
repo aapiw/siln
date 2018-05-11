@@ -7,13 +7,29 @@
                   <strong class="card-title">FORMULIR PENGAJUAN SK</strong>
               </div>
               <div class="card-body card-block">
-                <%= form_with(model: sk_submission, local: true) do |form| %>
+                <%= form_with(model: sk_submission, local: true, id:"submission_sk") do |form| %>
                   <div class="form-group" >
                     <%= form.label :year, "Tahun" %>
                       <%= form.select :year, params[:year].to_i..(Time.zone.now.year + 20), {include_hidden: false, :selected => sk_submission.year || params[:year]}, id: :active_year, class:"form-control", data:{id:sk_submission.id, type:"sk"} %>
                   </div>
                   <div>
-                    <%= form.select(:recent_sk, @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }, {selected: sk_submission.recent_sk }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+                  <!--  @teachers_based_on_year.map {|data| data.class == Teacher ? [ data.name, data.id ] : [ data.teacher.name, data.id ] } -->
+                  <!--  @teachers_based_on_year.map {|data| data.class == Teacher ? [ data.name, data.id ] : [ data.teacher.name, data.id ] } -->
+                    <%#= form.select(:recent_sk, @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }, {selected: sk_submission.recent_sk }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+                    
+                    <%#= form.select(:recent_sk, @teachers_based_on_year.map{ |data| data.class == Teacher ? [ data.name, "#{ ['teacher'=>data.id]}" ] : [ data.teacher.name, "#{ ['sk'=>data.id] }" ]  }, {selected: sk_submission.recent_sk }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+                    <%# @example = [["A", 1, {:class=>"bold"}], ["B", 2], ["C", 3]] %>
+                    <%#= form.select(:recent_sk, @example, {selected: sk_submission.recent_sk }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+                    <%# debugger %>
+                    <%= form.label :year, "Pilih Guru" %>
+                    <%= form.select(:sk_ids, @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }, {selected: sk_submission.sks.pluck(:id) }, id:"select_teachers_based_on_year", class:"form-control standardSelect select_sk_ids", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+                    <% debugger %>
+                    <%#= form.label :year, "Guru PNS", class:"mt-3" %>
+                    <%#= form.select(:teacher_ids, @teachers_based_on_year_pns.map {|t| [ t.name, t.id ] }, {selected: @school.pns_has_sk(sk_submission.year || params[:year]) }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+
+                    <%#= form.select(:sk_ids, @teachers_based_on_year.map {|sk| [ sk.teacher.name, [:'sk' => sk.id].to_json ] }, {selected: sk_submission.sks.pluck(:id) }, id:"select_teachers_based_on_year", class:"form-control standardSelect", :"data-placeholder" => "Pilih Guru", multiple:true, required:true) %>
+                    <%#= form.hidden_field "sk_ids[teacher][]", value:10 %>
+                    <%#= form.hidden_field "sk_ids[teacher][]", value:11 %>
                   </div>
                   <div class="form-group">
                     <%= form.hidden_field :school_id, value:@school.id, id: :sk_submission_school_id, required:true, placeholder:"", class:"from-control" %>

@@ -32,6 +32,7 @@ class ExtensionOfTask < ApplicationRecord
   attr_accessor :admin
   
   belongs_to :teacher
+  belongs_to :extension_submission
 
   has_attached_file :rekomendasi_perwakilan
   has_attached_file :surat_persetujuan_setneg
@@ -55,20 +56,20 @@ class ExtensionOfTask < ApplicationRecord
 	# 	return '<span class="badge badge-warning">Diajukan Sekolah</span>'.html_safe  if sk_submission.present?
 	# end
 
-  def has_submission
-    relation = ExtensionSubmission.find_by_year(year)
-    has_relation = relation ? relation.recent_extention.select{|d| d.to_s == id.to_s }.present? : nil
+  # def has_submission
+  #   relation = ExtensionSubmission.find_by_year(year)
+  #   has_relation = relation ? relation.recent_extention.select{|d| d.to_s == id.to_s }.present? : nil
 
-    if has_relation
-      ExtensionSubmission.find(relation.id)
-    else
-      nil
-    end
+  #   if has_relation
+  #     ExtensionSubmission.find(relation.id)
+  #   else
+  #     nil
+  #   end
     
-  end
+  # end
 
   def uploaded
-    if has_submission and has_submission.perpanjangan_tugas.present? and has_submission.perpanjangan_tugas.path
+    if extension_submission && extension_submission.perpanjangan_tugas.present? and extension_submission.perpanjangan_tugas.path
       '<span class="badge badge-success">Sudah</span>'.html_safe
     else 
       '<span class="badge badge-warning">Belum</span>'.html_safe
@@ -77,9 +78,9 @@ class ExtensionOfTask < ApplicationRecord
 
   def status
     html = ""
-    if has_submission
+    if extension_submission
       html +='<span class="badge badge-warning">Diajukan</span> '
-      if has_submission.perpanjangan_tugas.present? and has_submission.perpanjangan_tugas.path
+      if extension_submission.perpanjangan_tugas.present? and extension_submission.perpanjangan_tugas.path
         html +='<span class="badge badge-success">Diupload</span> '
       end
     else

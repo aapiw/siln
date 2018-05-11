@@ -27,6 +27,15 @@ class Teacher < ApplicationRecord
 		# .select('teachers.id, teachers.name, teachers.pns, teachers.period_of_teaching,
 		# 																					teachers.number_of_extension, teachers.expire, teachers.age,
 		# 																					sks.year, sks.note') }
+	
+	class << self
+		def pns_has_sks
+				# .teachers
+		end	
+	end
+
+
+
 	def count_extension
 		extension_of_tasks.count
 	end
@@ -37,7 +46,7 @@ class Teacher < ApplicationRecord
 	end
 
 	def sk_next_year
-		return Time.now.year.to_i if sks.blank?
+		return Time.now.year if sks.blank?
 		sks.map(&:year).sort.last.to_i+1
 	end
 
@@ -53,23 +62,9 @@ class Teacher < ApplicationRecord
 		
 		html.html_safe
 	end
-
-	def status_sk
-		unless pns
-		# 	html = ""
-		# 	if self.sk.present?
-		# 		if sk.sk_submission
-		# 			html = '<span class="badge badge-success">Disetujui</span>'
-		# 		elsif sk.sk_submission.approved_by_admin
-		# 			html = '<span class="badge badge-warning">Diajukan oleh Sekolah</span>'
-		# 		else
-		# 			html = '<span class="badge badge-primary">Dibuat</span>'
-		# 		end
-		# 	else
-		# 		html = '<span class="badge badge-danger">Belum Diajukan</span>'
-		# 	end
-		# 	html.html_safe
-		end
+	
+	def has_sk_subimission
+		relation = SkSubmission.all.map { |d| d.recent_sk["teacher"]  }
 	end
 
 end

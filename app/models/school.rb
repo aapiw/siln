@@ -38,6 +38,19 @@ class School < ApplicationRecord
 	scope :default, -> { where(admin:false) }
 	# scope :consulates, -> { where(role: "consulate") }
 
+	def pns_has_sk year
+		ids = []
+		pns = self.teachers.where(pns:true)
+		if pns
+			pns.each do |t|
+				if t.sks.find_by_year(year)
+					ids.push(t.id)
+				end
+			end
+		end
+		ids
+	end
+
 	def count_pns
 		self.teachers.where(pns:true).count
 	end

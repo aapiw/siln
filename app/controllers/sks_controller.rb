@@ -1,6 +1,6 @@
 class SksController < ApplicationController
   before_action :set_sk, only: [:show, :edit, :update, :destroy]
-  before_action :set_teacher, only: [:new, :edit, :update]
+  before_action :set_teacher, only: [:new, :edit, :update, :create]
 
 
   # GET /sks
@@ -27,7 +27,7 @@ class SksController < ApplicationController
   # POST /sks.json
   def create
     @sk = Sk.new(sk_params)
-
+    debugger
     respond_to do |format|
       if @sk.save
         format.html { redirect_to root_path, notice: 'SK berhasil dibuat' }
@@ -74,6 +74,6 @@ class SksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sk_params
-      params.require(:sk).permit(:teacher_id, :year, :permohonan_perwakilan, :ijazah, :sertifikat_pendidik, :nuptk, :sk_perwakilan, :ktp_or_paspor, :kk, :cv, :sk_inpassing, :biodata_ln, :form_biaya, :pernyataan, :approved_by_school, :approved_by_admin, :note, :sk_untuk_guru, :admin)
+      params.require(:sk).permit(:teacher_id, :year, :permohonan_perwakilan, :ijazah, :sertifikat_pendidik, :nuptk, :sk_perwakilan, :ktp_or_paspor, :kk, :cv, :sk_inpassing, :biodata_ln, :form_biaya, :pernyataan, :approved_by_school, :approved_by_admin, :note, :sk_untuk_guru, :admin, :pns)
     end
 end

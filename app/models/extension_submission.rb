@@ -15,15 +15,16 @@
 #
 
 class ExtensionSubmission < ApplicationRecord
-	attr_accessor :admin
+	attr_accessor :admin, :extention_ids
 
-	serialize :recent_extention, Array
+	# serialize :recent_extention, Array
 	
   has_many :teachers
+  has_many :extension_of_tasks
 
   belongs_to :school
   
-  validates_presence_of :year, :recent_extention, unless: :admin
+  validates_presence_of :year, unless: :admin
   validates_presence_of :perpanjangan_tugas, if: :admin
 
   has_attached_file :perpanjangan_tugas
@@ -33,10 +34,21 @@ class ExtensionSubmission < ApplicationRecord
  	validates_attachment :perpanjangan_tugas, size: { in: 0..3.megabytes, message: 'maksimum 3 megabytes' }
  	validates_attachment_file_name :perpanjangan_tugas, matches: [/jpe?g\Z/, /png\Z/, /JP?G\Z/, /PNG\Z/, /PDF\Z/, /pdf\Z/]
 
+  after_save :update_extention, if: :extention_ids
+
  	# def approved_by_admin
  	# 	return '<span class="badge badge-success">Disetejui</span>'.html_safe if perpanjangan_tugas.present?
  	# 	# return '<span class="badge badge-warning">Diajukan Sekolah</span>'.html_safe  if sk_submission.present?
  	# end
+  def update_extention
+    extention_ids.reject!(&:blank?)
+    if extention_ids.map{|e| e.to_i }.sort != self.extension_of_tasks.pluck(:id).sort
+      ExtensionOfTask.where(id: self.extension_of_tasks.pluck(:id), year:self.year).update_all(extension_submission_id:nil)
+      ExtensionOfTask.where(id: extention_ids, year:self.year).update_all(extension_submission_id:self.id)  
+    end
+    
+  end
+
  	def status
  		html=""
  		if perpanjangan_tugas.path.present?

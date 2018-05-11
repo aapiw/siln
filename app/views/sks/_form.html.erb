@@ -32,87 +32,92 @@ Download SK Mendikbud
                   <% lock = true if current_school.admin || sk.approved_by_admin %>
                   <div class="<%= lock ? 'lock' : '' %>">
                     <div class="form-group">
-                      <%= form.hidden_field :teacher_id, value:@teacher.id, id: :sk_teacher_id %>
+                      <%= form.hidden_field :teacher_id, value:@teacher.id , id: :sk_teacher_id %>
                     </div>
 
                     <div class="form-group">
                       <%= form.label :year, "Pilih tahun" %>
-                      <%= form.select :year, params[:year].to_i..(Time.zone.now.year + 20), {include_hidden: false, :selected => sk.year || params[:year]}, id: :sk_year, class:"form-control" %>
+                      <%#= form.select :year, params[:year].to_i..(Time.zone.now.year + 20), {include_hidden: false, :selected => sk.year || params[:year]}, id: :sk_year, class:"form-control" %>
+                      <div class="lock">
+                      <%= form.text_field :year, value:params[:year], id: :sk_year, class:"form-control" %>
+                        
+                      </div>
                     </div>
+                    <%= form.hidden_field :pns, value:@teacher.pns %>
+                    <% unless @teacher.pns %>
+                      <div class="form-group">
+                        <%= form.label :permohonan_perwakilan, "Upload Surat Permohonan Perwakilan" %>
+                        <%= form.file_field :permohonan_perwakilan, id: :sk_permohonan_perwakilan, required:true, placeholder: "Upload Surat Permohonan Perwakilan", class:"form-control" %>
+                        <%= see_donwload(sk.permohonan_perwakilan, "Surat Permohonan Perwakilan")  if sk.persisted? %>
+                      </div>
 
-                    <div class="form-group">
-                      <%= form.label :permohonan_perwakilan, "Upload Surat Permohonan Perwakilan" %>
-                      <%= form.file_field :permohonan_perwakilan, id: :sk_permohonan_perwakilan, required:true, placeholder: "Upload Surat Permohonan Perwakilan", class:"form-control" %>
-                      <%= see_donwload(sk.permohonan_perwakilan, "Surat Permohonan Perwakilan")  if sk.persisted? %>
+                      <div class="form-group">
+                        <%= form.label :ijazah, "Upload Ijazah Pendidikan Terakhir" %>
+                        <%= form.file_field :ijazah, id: :sk_ijazah, placeholder: "Upload Ijazah Pendidikan Terakhir", required:true, class:"form-control" %>
+                        <%= see_donwload(sk.ijazah, "Ijazah Pendidikan Terakhir")  if sk.persisted? %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= form.label :sertifikat_pendidik, "Upload Sertifikat Pendidik" %>
+                        <%= form.file_field :sertifikat_pendidik, id: :sk_sertifikat_pendidik, placeholder: "Upload Sertifikat Pendidik", required:true, class:"form-control" %>
+                        <%= see_donwload(sk.sertifikat_pendidik, "Sertifikat Pendidik") if sk.persisted? %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= form.label :nuptk, "Upload NUPTK" %>
+                        <%= form.file_field :nuptk, id: :sk_nuptk, placeholder: "Upload NUPTK", required:true, class:"form-control" %>
+                        <%= see_donwload(sk.nuptk, "NUPTK") if sk.persisted? %>
+                       </div>
+
+                      <div class="form-group">
+                        <%= form.label :sk_perwakilan, "Upload SK Perwakilan" %>
+                        <%= form.file_field :sk_perwakilan, id: :sk_sk_perwakilan, placeholder: "Upload SK Perwakilan", required:true, class:"form-control" %>
+                        <%= see_donwload(sk.sk_perwakilan, "SK Perwakilan") if sk.persisted? %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= form.label :ktp_or_paspor, "Upload KTP/Paspor" %>
+                        <%= form.file_field :ktp_or_paspor, id: :sk_ktp_or_paspor, placeholder: "Upload KTP/Paspor", required:true, class:"form-control" %>
+                        <%= see_donwload(sk.ktp_or_paspor, "KTP/Paspor") if sk.persisted? %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= form.label :kk,"Upload Kartu keluarga" %>
+                        <%= form.file_field :kk, id: :sk_kk, placeholder: "Upload Kartu keluarga", required:true, class:"form-control" %>
+                        <%= see_donwload(sk.kk, "Kartu keluarga") if sk.persisted? %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= form.label :cv, "Upload CV" %>
+                        <%= form.file_field :cv, id: :sk_cv, placeholder: "Upload CV", required:true, class:"form-control"  %>
+                        <%= see_donwload(sk.cv, "CV") if sk.persisted? %>
+                       </div>
+
+                      <div class="form-group">
+                        <%= form.label :sk_inpassing, "Upload SK Inpassing" %>
+                        <%= form.file_field :sk_inpassing, id: :sk_sk_inpassing, placeholder: "Upload SK Inpassing", class:"form-control" %>
+                        <%= see_donwload(sk.sk_inpassing, "SK Inpassing") if sk.persisted? %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= form.label :biodata_ln, "Upload Biodata LN" %>
+                        <%= form.file_field :biodata_ln, id: :sk_biodata_ln, required:true, placeholder: "Upload Biodata LN", class:"form-control" %>
+                        <%= see_donwload(sk.biodata_ln, "SK Biodata LN")  if sk.persisted? %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= form.label :form_biaya,"Upload Form Biaya" %>
+                        <%= form.file_field :form_biaya, id: :sk_form_biaya, required:true, placeholder: "Upload Form Biaya", class:"form-control"  %>
+                        <%= see_donwload(sk.form_biaya, "Form Biaya") if sk.persisted? %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= form.label :pernyataan, "Upload Surat Pernyataan" %>
+                        <%= form.file_field :pernyataan, id: :sk_pernyataan, required:true, placeholder: "Upload Surat Pernyataan", class:"form-control" %>
+                        <%= see_donwload(sk.form_biaya, "Form Surat Pernyataan")  if sk.persisted? %>
+                      </div>
                     </div>
-
-                    <div class="form-group">
-                      <%= form.label :ijazah, "Upload Ijazah Pendidikan Terakhir" %>
-                      <%= form.file_field :ijazah, id: :sk_ijazah, placeholder: "Upload Ijazah Pendidikan Terakhir", required:true, class:"form-control" %>
-                      <%= see_donwload(sk.ijazah, "Ijazah Pendidikan Terakhir")  if sk.persisted? %>
-                    </div>
-
-                    <div class="form-group">
-                      <%= form.label :sertifikat_pendidik, "Upload Sertifikat Pendidik" %>
-                      <%= form.file_field :sertifikat_pendidik, id: :sk_sertifikat_pendidik, placeholder: "Upload Sertifikat Pendidik", required:true, class:"form-control" %>
-                      <%= see_donwload(sk.sertifikat_pendidik, "Sertifikat Pendidik") if sk.persisted? %>
-                    </div>
-
-                    <div class="form-group">
-                      <%= form.label :nuptk, "Upload NUPTK" %>
-                      <%= form.file_field :nuptk, id: :sk_nuptk, placeholder: "Upload NUPTK", required:true, class:"form-control" %>
-                      <%= see_donwload(sk.nuptk, "NUPTK") if sk.persisted? %>
-                     </div>
-
-                    <div class="form-group">
-                      <%= form.label :sk_perwakilan, "Upload SK Perwakilan" %>
-                      <%= form.file_field :sk_perwakilan, id: :sk_sk_perwakilan, placeholder: "Upload SK Perwakilan", required:true, class:"form-control" %>
-                      <%= see_donwload(sk.sk_perwakilan, "SK Perwakilan") if sk.persisted? %>
-                    </div>
-
-                    <div class="form-group">
-                      <%= form.label :ktp_or_paspor, "Upload KTP/Paspor" %>
-                      <%= form.file_field :ktp_or_paspor, id: :sk_ktp_or_paspor, placeholder: "Upload KTP/Paspor", required:true, class:"form-control" %>
-                      <%= see_donwload(sk.ktp_or_paspor, "KTP/Paspor") if sk.persisted? %>
-                    </div>
-
-                    <div class="form-group">
-                      <%= form.label :kk,"Upload Kartu keluarga" %>
-                      <%= form.file_field :kk, id: :sk_kk, placeholder: "Upload Kartu keluarga", required:true, class:"form-control" %>
-                      <%= see_donwload(sk.kk, "Kartu keluarga") if sk.persisted? %>
-                    </div>
-
-                    <div class="form-group">
-                      <%= form.label :cv, "Upload CV" %>
-                      <%= form.file_field :cv, id: :sk_cv, placeholder: "Upload CV", required:true, class:"form-control"  %>
-                      <%= see_donwload(sk.cv, "CV") if sk.persisted? %>
-                     </div>
-
-                    <div class="form-group">
-                      <%= form.label :sk_inpassing, "Upload SK Inpassing" %>
-                      <%= form.file_field :sk_inpassing, id: :sk_sk_inpassing, placeholder: "Upload SK Inpassing", class:"form-control" %>
-                      <%= see_donwload(sk.sk_inpassing, "SK Inpassing") if sk.persisted? %>
-                    </div>
-
-                    <div class="form-group">
-                      <%= form.label :biodata_ln, "Upload Biodata LN" %>
-                      <%= form.file_field :biodata_ln, id: :sk_biodata_ln, required:true, placeholder: "Upload Biodata LN", class:"form-control" %>
-                      <%= see_donwload(sk.biodata_ln, "SK Biodata LN")  if sk.persisted? %>
-                    </div>
-
-                    <div class="form-group">
-                      <%= form.label :form_biaya,"Upload Form Biaya" %>
-                      <%= form.file_field :form_biaya, id: :sk_form_biaya, required:true, placeholder: "Upload Form Biaya", class:"form-control"  %>
-                      <%= see_donwload(sk.form_biaya, "Form Biaya") if sk.persisted? %>
-                    </div>
-
-                    <div class="form-group">
-                      <%= form.label :pernyataan, "Upload Surat Pernyataan" %>
-                      <%= form.file_field :pernyataan, id: :sk_pernyataan, required:true, placeholder: "Upload Surat Pernyataan", class:"form-control" %>
-                      <%= see_donwload(sk.form_biaya, "Form Surat Pernyataan")  if sk.persisted? %>
-                    </div>
-                  </div>
-
+                  <% end %>
                   <% if sk.approved_by_admin || current_school.admin %>
                     
                     <hr>

@@ -2,7 +2,7 @@ class CreateSks < ActiveRecord::Migration[5.1]
   def change
     create_table :sks do |t|
       t.references :teacher, foreign_key: true
-      # t.references :sk_submission, foreign_key: true
+      t.references :sk_submission, foreign_key: true
       t.string :year
       t.attachment :permohonan_perwakilan
       t.attachment :ijazah

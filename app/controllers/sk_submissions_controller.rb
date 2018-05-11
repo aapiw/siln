@@ -31,10 +31,11 @@ class SkSubmissionsController < ApplicationController
   # POST /sk_submissions
   # POST /sk_submissions.json
   def create
-    sk_submission_params2 = sk_submission_params
-    sk_submission_params2["recent_sk"].reject!(&:blank?)
+    # sk_submission_params2 = sk_submission_params
+    # sk_submission_params2["sk_ids"].reject!(&:blank?)
+    # sk_submission_params2["teacher_ids"].reject!(&:blank?)
 
-    @sk_submission = SkSubmission.new(sk_submission_params2)
+    @sk_submission = SkSubmission.new(sk_submission_params)
     respond_to do |format|
       if @sk_submission.save
         format.html { redirect_to sk_submissions_url, notice: 'Pengajuan SK berhasil dibuat.' }
@@ -48,10 +49,12 @@ class SkSubmissionsController < ApplicationController
   # PATCH/PUT /sk_submissions/1
   # PATCH/PUT /sk_submissions/1.json
   def update
-    sk_submission_params2 = sk_submission_params
-    sk_submission_params2["recent_sk"].reject!(&:blank?)
+    debugger
+    # sk_submission_params2 = sk_submission_params
+    # sk_submission_params2["sk_ids"].reject!(&:blank?)
+    # sk_submission_params2["teacher_ids"].reject!(&:blank?)
     respond_to do |format|
-      if @sk_submission.update(sk_submission_params2)
+      if @sk_submission.update(sk_submission_params)
         format.html { redirect_to sk_submissions_url, notice: 'Pengajuan SK berhasil diperbarui.' }
       else
         format.html { render :edit }
@@ -70,8 +73,11 @@ class SkSubmissionsController < ApplicationController
   end
   
   def teachers_based_on_year
-    @teachers_based_on_year = Sk.show_teachers_based_year(@school.teachers.pluck(:id), params[:year])
-    render json: @teachers_based_on_year.map {|sk| [ sk.teacher.name, sk.id ] }
+    # debugger
+    teacher_ids = @school.teachers.pluck(:id)
+    # @teachers_based_on_year = @school.teachers.where(pns:true)
+    @teachers_based_on_year = Sk.show_teachers_based_year(teacher_ids, params[:year])
+    render json: @teachers_based_on_year.map {|data| data.class == Teacher ? [ data.name, data.id ] : [ data.teacher.name, data.id ] }
   end
 
   private
@@ -95,7 +101,11 @@ class SkSubmissionsController < ApplicationController
 
     def set_teachers_based_on_year
       year = @sk_submission ? @sk_submission.year : params[:year]
+      # @teachers_based_on_year = @school.teachers.where(pns:true)
       @teachers_based_on_year = Sk.show_teachers_based_year(@school.teachers.pluck(:id), year.to_s)
+      # @teachers_based_on_year_pns = Sk.show_teachers_based_year(@school.teachers.where(pns:true).pluck(:id), year.to_s)
+      # @teachers_based_on_year_pns = @school.teachers.where(pns:true)
+
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_sk_submission
@@ -109,6 +119,6 @@ class SkSubmissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sk_submission_params
-      params.require(:sk_submission).permit(:year, :school_id, :admin, recent_sk:[])
+      params.require(:sk_submission).permit(:year, :school_id, :admin, sk_ids:[])
     end
 end

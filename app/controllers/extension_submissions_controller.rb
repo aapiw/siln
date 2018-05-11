@@ -31,10 +31,10 @@ class ExtensionSubmissionsController < ApplicationController
   # POST /extension_submissions
   # POST /extension_submissions.json
   def create
-    extension_submission_params2 = extension_submission_params
-    extension_submission_params2["recent_extention"].reject!(&:blank?)
+    # extension_submission_params2 = extension_submission_params
+    # extension_submission_params2["recent_extention"].reject!(&:blank?)
 
-    @extension_submission = ExtensionSubmission.new(extension_submission_params2)
+    @extension_submission = ExtensionSubmission.new(extension_submission_params)
 
     respond_to do |format|
       if @extension_submission.save
@@ -49,10 +49,10 @@ class ExtensionSubmissionsController < ApplicationController
   # PATCH/PUT /extension_submissions/1
   # PATCH/PUT /extension_submissions/1.json
   def update
-    extension_submission_params2 = extension_submission_params
-    extension_submission_params2["recent_extention"].reject!(&:blank?)
+    # extension_submission_params2 = extension_submission_params
+    # extension_submission_params2["recent_extention"].reject!(&:blank?)
     respond_to do |format|
-      if @extension_submission.update(extension_submission_params2)
+      if @extension_submission.update(extension_submission_params)
         format.html { redirect_to extension_submissions_path, notice: 'Permohonan perpanjangan berhasil diperbarui.' }
       else
         format.html { render :edit }
@@ -106,6 +106,6 @@ class ExtensionSubmissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def extension_submission_params
-      params.require(:extension_submission).permit(:school_id, :year, :perpanjangan_tugas, :admin, recent_extention:[])
+      params.require(:extension_submission).permit(:school_id, :year, :perpanjangan_tugas, :admin, extention_ids:[])
     end
 end

@@ -3,7 +3,7 @@ class CreateSkSubmissions < ActiveRecord::Migration[5.1]
     create_table :sk_submissions do |t|
       t.string :year
       t.references :school, foreign_key: true
-      t.text :recent_sk
+      # t.text :recent_sk
       
 
       t.timestamps
