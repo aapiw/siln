@@ -60,5 +60,5 @@ Teacher.find(3).extension_of_tasks.new(year: "2018", extension_submission_id:1).
 Teacher.find(3).extension_of_tasks.new(year: "2020", extension_submission_id:3).save(validate:false)
 Teacher.find(4).extension_of_tasks.new(year: "2019", extension_submission_id:2).save(validate:false)
 
-School.create(username:"admin", name:"admin", password:"admin!", country_id:1, admin:true)
+School.create(username:"admin", name:"admin", password:ENV['ADMIN_PASSWORD'], country_id:1, admin:true)
 

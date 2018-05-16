@@ -23,7 +23,7 @@
 .byebug_history
 *.zip
 
-#*.xlsx
+*.xlsx
 
 adminbsb-materialdesign
 *.note
