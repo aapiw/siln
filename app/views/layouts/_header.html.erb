@@ -9,9 +9,10 @@
     <div class="col-sm-5">
         <div class="user-area dropdown float-right">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <p><%= current_school.type %>
-                <img class="user-avatar rounded-circle" src="/assets/admin.jpg" alt="User Avatar">
-                </p>
+                <div class="text"><%= current_school.type %>
+                <!-- <img class="user-avatar rounded-circle" src="/assets/admin.jpg" alt="User Avatar"> -->
+                </div>
+                <div class="text-icon"><%= current_school.admin ? 'A' : 'S' %></div>
             </a>
 
             <div class="user-menu dropdown-menu">
