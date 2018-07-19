@@ -25,9 +25,14 @@ Download SK Mendikbud
         <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
-                  <strong class="card-title">PERMOHONAN SK GURU <%= @teacher.name.upcase rescue nil %></strong>
+                  <strong class="card-title">PERMOHONAN SK GURU <%= @teacher.name.upcase rescue nil %> <%= @teacher.school.name if current_school.admin %></strong>
               </div>
+
               <div class="card-body card-block">
+                <% if sk.permohonan_perwakilan.blank? or sk.sk_submission %>
+                <div class="alert alert-danger">Berkas pengajuan belum lengkap silakan hubungi admin sekolah</div>
+                <% end %>
+
                 <%= form_with(model: sk, local: true) do |form| %>
                   <% lock = true if current_school.admin || sk.approved_by_admin %>
                   <div class="<%= lock ? 'lock' : '' %>">

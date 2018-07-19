@@ -37,7 +37,6 @@ class SkSubmission < ApplicationRecord
   #   teachers = Teacher.where(id: teacher_ids)
   #   teachers.each do |t|
   #   if t.sks && t.sks.find_by_year(self.year)
-  #     debugger
   #     Sk.where(id: t.sks.find_by_year(self.year).id).update_all(sk_submission_id:nil)
   #     # Sk.where(id: sk_ids).update_all(sk_submission_id:self.id)  
   #   else#create sk

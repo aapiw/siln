@@ -49,7 +49,6 @@ class SkSubmissionsController < ApplicationController
   # PATCH/PUT /sk_submissions/1
   # PATCH/PUT /sk_submissions/1.json
   def update
-    debugger
     # sk_submission_params2 = sk_submission_params
     # sk_submission_params2["sk_ids"].reject!(&:blank?)
     # sk_submission_params2["teacher_ids"].reject!(&:blank?)

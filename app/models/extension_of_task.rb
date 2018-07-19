@@ -78,6 +78,10 @@ class ExtensionOfTask < ApplicationRecord
 
   def status
     html = ""
+    if approved_by_admin
+      html += '<span class="badge badge-success">Diverifikasi</span> '
+    end
+    
     if extension_submission
       html +='<span class="badge badge-warning">Diajukan</span> '
       if extension_submission.perpanjangan_tugas.present? and extension_submission.perpanjangan_tugas.path
@@ -87,9 +91,6 @@ class ExtensionOfTask < ApplicationRecord
       html +='<span class="badge badge-danger">Belum Diajukan</span> ' 
     end
 
-    if approved_by_admin
-      html += '<span class="badge badge-success">Diverifikasi</span> '
-    end
     html.html_safe
   end
 

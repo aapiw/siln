@@ -132,11 +132,11 @@ class Sk < ApplicationRecord
     else
       html +='<span class="badge badge-danger">Belum Diajukan</span> ' 
     end
-    if sk_untuk_guru.path.present?
-      html += '<span class="badge badge-success">Diupload</span> '
-    end
     if approved_by_admin
       html += '<span class="badge badge-success">Diverifikasi</span> '
+    end
+    if sk_untuk_guru.path.present?
+      html += '<span class="badge badge-success">Diupload</span> '
     end
     html.html_safe
   end

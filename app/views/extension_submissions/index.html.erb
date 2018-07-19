@@ -31,10 +31,10 @@
                       <% end %>
                       <td>
                         <% if current_school.admin %>
-                          <%= link_to "Lihat", school_path(extension_submission.school, year:extension_submission.year, extention:true) , target:"_blank", class:"btn btn-primary" %>
-                          <%= link_to "Upload", edit_school_extension_submission_path(extension_submission.school.id, extension_submission, year:extension_submission.year ) , target:"_blank", class:"btn btn-primary" %>
+                          <%= link_to "Lihat", school_path(extension_submission.school, year:extension_submission.year, extention:true), class:"btn btn-primary" %>
+                          <%= link_to "Upload", edit_school_extension_submission_path(extension_submission.school.id, extension_submission, year:extension_submission.year ) ,class:"btn btn-primary" %>
                         <% else %>
-                          <%= link_to "Lihat", edit_school_extension_submission_path(extension_submission.school.id, extension_submission, year:extension_submission.year), target:"_blank", class:"btn btn-primary" %>
+                          <%= link_to "Lihat", edit_school_extension_submission_path(extension_submission.school.id, extension_submission, year:extension_submission.year), class:"btn btn-primary" %>
                         <% end %>
                       </td>
                     </tr>

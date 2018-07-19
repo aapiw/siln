@@ -4,7 +4,7 @@
         <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
-                  <strong class="card-title">PENGAJUAN PERPANJANGN TUGAS</strong>
+                  <strong class="card-title">PENGAJUAN PERPANJANGN TUGAS <%= @school.name  if @school %></strong>
               </div>
               <div class="card-body card-block">
                 <%= form_with(model: extension_submission, local: true) do |form| %>

@@ -71,14 +71,19 @@ class ExtensionSubmissionsController < ApplicationController
   end
 
   def teachers_based_on_year
-    @teachers_based_on_year = ExtensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), params[:year])  
+    extensionOfTask = ExtensionOfTask.where(approved_by_admin:true) if current_school.admin
+    extensionOfTask = ExtensionOfTask
+    @teachers_based_on_year = extensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), params[:year])  
     render json: @teachers_based_on_year.map {|ext| [ ext.teacher.name, ext.id ] }
   end
 
   private
     def set_teachers_based_on_year
+      extensionOfTask = ExtensionOfTask
+      extensionOfTask = ExtensionOfTask.where(approved_by_admin:true) if current_school.admin
       year = @sk_submission ? @sk_submission.year : params[:year]
-      @teachers_based_on_year = ExtensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), year.to_s)
+      @teachers_based_on_year = extensionOfTask.show_teachers_based_year(@school.teachers.pluck(:id), year.to_s)
+      # @teachers_based_on_year = [nil, nil] if @teachers_based_on_year.blank?
     end
 
     # Use callbacks to share common setup or constraints between actions.

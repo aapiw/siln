@@ -70,7 +70,7 @@
                                 <table>
                                   <tr>
                                     <td>
-                                      <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary " target="blank">
+                                      <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary " >
                                         <%= sk.year %>
                                       </a>
                                       <td>
@@ -85,7 +85,7 @@
                                 <table>
                                   <tr>
                                     <td>
-                                      <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary " target="blank">
+                                      <a href="<%= edit_teacher_sk_path(teacher, sk) %>" class="btn btn-primary " >
                                         <%= sk.year %>
                                       </a>
                                     </td>
@@ -102,7 +102,7 @@
                               <tr>
                                 <% unless current_school.admin %>
                                   <td>
-                                    <a href="<%= new_teacher_sk_path(teacher, year:teacher.sk_next_year) %>" class="btn btn-primary " target="blank">Mohon Baru</a>
+                                    <a href="<%= new_teacher_sk_path(teacher, year:teacher.sk_next_year) %>" class="btn btn-primary " >Mohon Baru</a>
                                   </td>
                                 <% end %>
                               </tr>
@@ -116,7 +116,7 @@
                                   <table>
                                     <tr>
                                       <td>
-                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
+                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" >
                                           <%= ext.year %>
                                         </a>
                                       </td>
@@ -131,7 +131,7 @@
                                   <table>
                                     <tr>
                                       <td>
-                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
+                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" >
                                           <%= ext.year %>
                                         </a>
                                       </td>
@@ -147,7 +147,7 @@
                             <tr>
                               <% unless current_school.admin %>
                                 <td>
-                                  <a href="<%= new_teacher_extension_of_task_path(teacher, year:teacher.ext_next_year) %>" class="btn btn-primary" target="blank">Mohon Baru</a>
+                                  <a href="<%= new_teacher_extension_of_task_path(teacher, year:teacher.ext_next_year) %>" class="btn btn-primary" >Mohon Baru</a>
                                 </td>
                                 <% end %>
                             </tr>
@@ -164,7 +164,7 @@
                                     <table>
                                       <tr>
                                         <td>
-                                          <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
+                                          <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" >
                                             <%= ext.year %>
                                           </a>
                                         </td>
@@ -179,7 +179,7 @@
                                   <table>
                                     <tr>
                                       <td>
-                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
+                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" >
                                           <%= ext.year %>
                                         </a>
                                       </td>
@@ -196,7 +196,7 @@
                                 <% unless current_school.admin %>
                                   <% if teacher.count_extension < 2 %>
                                     <td>
-                                      <a href="<%= new_teacher_extension_of_task_path(teacher, year:teacher.ext_next_year) %>" class="btn btn-primary" target="blank">Mohon Baru</a>
+                                      <a href="<%= new_teacher_extension_of_task_path(teacher, year:teacher.ext_next_year) %>" class="btn btn-primary" >Mohon Baru</a>
                                     </td>
                                   <% end %>
                                 <% end %>

@@ -82,7 +82,8 @@
 }
 
 .blinking {
-  animation: blinker 1s linear infinite;
+  animation: blinker 2.8s linear infinite;
+    padding: 8px;
 }
 
 @keyframes blinker {

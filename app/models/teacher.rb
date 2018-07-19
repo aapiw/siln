@@ -15,14 +15,27 @@
 #
 
 class Teacher < ApplicationRecord
+	
+	has_attached_file :document
+	has_attached_file :photo
+
+	validates_presence_of :document, :photo
+
+	validates_attachment_content_type :document, :photo, content_type: ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'],
+																		message: 'format salah'
+    
+    validates_attachment :document, :photo, size: { in: 0..3.megabytes, message: 'maksimum 3 megabytes' }
+
+    validates_attachment_file_name :document, :photo, matches: [/jpe?g\Z/, /png\Z/, /JP?G\Z/, /PNG\Z/, /PDF\Z/, /pdf\Z/  ]
+	
 	has_many :sks, -> { order(:year => :asc) }, dependent: :destroy 
 	has_many :extension_of_tasks, -> { order(:year => :asc) }, dependent: :destroy
 
   belongs_to :school, optional:true
   # belongs_to :sk_submission, optional:true
 
-	validates_presence_of :name, :age, :period_of_teaching, :expire
 
+	validates_presence_of :name,  :period_of_teaching, :expire #:age
 		# scope :submissions, -> { joins(:sks, :extension_of_task).where("sks.date = price_movement.date")}
 		# .select('teachers.id, teachers.name, teachers.pns, teachers.period_of_teaching,
 		# 																					teachers.number_of_extension, teachers.expire, teachers.age,

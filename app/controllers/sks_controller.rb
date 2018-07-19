@@ -27,7 +27,6 @@ class SksController < ApplicationController
   # POST /sks.json
   def create
     @sk = Sk.new(sk_params)
-    debugger
     respond_to do |format|
       if @sk.save
         format.html { redirect_to root_path, notice: 'SK berhasil dibuat' }

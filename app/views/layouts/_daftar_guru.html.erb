@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">
             <% 
-              title =  "DAFTAR PERMOHONAN GURU"
+              title =  "DAFTAR PERMOHONAN GURU #{@school.name if @school }"
               if params[:sk] or params[:extention]
                   type = params[:sk] ?  "DAFTAR PENGAJUAN SK" : "DAFTAR PENGAJUAN PERPANJANGAN TUGAS"
                   title = "#{type} #{ @school.name } TAHUN #{params[:year]}"
@@ -65,9 +65,16 @@
                             <table>
                               <tr>
                                 <td>
-                                  <a href="<%= edit_teacher_sk_path(teacher, sk, year:sk.year, pns: teacher.pns) %>" class="btn btn-primary " target="blank">
-                                    <%= sk.year %>
-                                  </a>
+                                  <%# if current_school.admin %>
+                                    <!-- <span class="badge badge-primary"> -->
+                                      <%#= sk.year %>
+                                    <!-- </span> -->
+                                  <%# else %>
+                                  <%# end %>
+                                    <a href="<%= edit_teacher_sk_path(teacher, sk, year:sk.year, pns: teacher.pns) %>" class="btn btn-primary ">
+                                      <%= sk.year %>
+                                    </a>
+
                                   <td>
                                     <%= sk.status %>
                                   </td>
@@ -80,9 +87,15 @@
                             <table>
                               <tr>
                                 <td>
-                                  <a href="<%= edit_teacher_sk_path(teacher, sk, year:sk.year, pns: teacher.pns) %>" class="btn btn-primary " target="blank">
-                                    <%= sk.year %>
-                                  </a>
+                                  <% if current_school.admin %>
+                                    <span class="badge badge-primary">
+                                      <%= sk.year %>
+                                    </span>
+                                  <% else %>
+                                    <a href="<%= edit_teacher_sk_path(teacher, sk, year:sk.year, pns: teacher.pns) %>" class="btn btn-primary ">
+                                      <%= sk.year %>
+                                    </a>
+                                  <% end %>
                                 </td>
                                 <td>
                                   <%= sk.status %>
@@ -98,7 +111,7 @@
                             <% unless current_school.admin  %>
                               <% if teacher.age.to_i < 61 %>
                                 <td>
-                                  <a href="<%= new_teacher_sk_path(teacher, year:teacher.sk_next_year, pns: teacher.pns) %>" class="btn btn-primary " target="blank"><%= teacher.pns ? 'Tambah Baru' : 'Mohon Baru' %></a>
+                                  <a href="<%= new_teacher_sk_path(teacher, year:teacher.sk_next_year, pns: teacher.pns) %>" class="btn btn-primary ">Tambah Baru</a>
                                 </td>
                               <% end %>
                             <% end %>
@@ -113,9 +126,15 @@
                                   <table>
                                     <tr>
                                       <td>
-                                        <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
-                                          <%= ext.year %>
-                                        </a>
+                                        <%# if current_school.admin %>
+                                          <!-- <span class="badge badge-primary"> -->
+                                            <%#= ext.year %>
+                                          <!-- </a> -->
+                                        <%# else %>
+                                        <%# end %>
+                                          <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary">
+                                            <%= ext.year %>
+                                          </a>
                                       </td>
                                       <td>
                                         <%= ext.status %>
@@ -128,9 +147,15 @@
                                 <table>
                                   <tr>
                                     <td>
-                                      <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary" target="blank">
-                                        <%= ext.year %>
-                                      </a>
+                                      <% if current_school.admin %>
+                                          <span class="badge badge-primary">
+                                            <%= ext.year %>
+                                          </a>
+                                        <% else %>
+                                          <a href="<%= edit_teacher_extension_of_task_path(teacher, ext) %>" class="btn btn-primary">
+                                            <%= ext.year %>
+                                          </a>
+                                        <% end %>
                                     </td>
                                     <td>
                                       <%= ext.status %>
@@ -145,7 +170,7 @@
                             <% unless current_school.admin %>
                               <% if teacher.age.to_i < 61 %>
                                 <td>
-                                  <a href="<%= new_teacher_extension_of_task_path(teacher, year:teacher.ext_next_year) %>" class="btn btn-primary" target="blank">Mohon Baru</a>
+                                  <a href="<%= new_teacher_extension_of_task_path(teacher, year:teacher.ext_next_year) %>" class="btn btn-primary">Tambah Baru</a>
                                 </td>
                               <% end %>
                             <% end %>

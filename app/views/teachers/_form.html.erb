@@ -26,10 +26,10 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <%= form.label :age, "Usia" %>
-                    <%= form.number_field :age, id: :teacher_age, min:0, required:true, placeholder: "Usia", class:"form-control" %>
-                  </div>
+                  <!-- <div class="form-group">
+                    <%#= form.label :age, "Usia" %>
+                    <%#= form.number_field :age, id: :teacher_age, min:0, required:true, placeholder: "Usia", class:"form-control" %>
+                  </div> -->
 
                   <div class="form-group">
                     <%= form.label :period_of_teaching, "Lama Mengajar (Tahun)" %>
@@ -42,6 +42,94 @@
                     <%= form.date_select :expire, { :start_year => Date.current.year - 1, :end_year => 2030, :include_blank => false }, {:class => "form-control mb-1 col-3 float-left"} %>
                     <div class="clearfix"></div>
                   </div>
+                  
+                  <div class="form-group">
+                    <%= form.label :lokasi, "Lokasi" %>
+                    <%= form.number_field :lokasi, required:true, placeholder: "Lama Mengajar", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :tgl_lahir, "Tgl Lahir" %>
+                    <%= form.date_field :tgl_lahir, required:true, placeholder: "Tgl Lahir", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :nip, "NIP" %>
+                    <%= form.text_field :nip, required:true, placeholder: "NIP", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :jabatan, "Jabatan" %>
+                    <%= form.text_field :jabatan, required:true, placeholder: "Jabatan", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :sk_pengangkatan, "SK Pengangkatan" %>
+                    <%= form.text_field :sk_pengangkatan, required:true, placeholder: "SK Pengangkatan", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :nuptk, "NUPTK" %>
+                    <%= form.text_field :nuptk, required:true, placeholder: "NUPTK", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :unit_kerja_asal, "Unit Kerja Asal" %>
+                    <%= form.text_field :unit_kerja_asal, required:true, placeholder: "Unit Kerja Asal", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :no_sertifikasi_guru, "No Sertifikasi Guru" %>
+                    <%= form.text_field :no_sertifikasi_guru, required:true, placeholder: "No Sertifikasi Guru", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :bidang_studi, "Bidang Studi" %>
+                    <%= form.text_field :bidang_studi, required:true, placeholder: "Bidang Studi", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :jumlah_jam_kerja, "Jumlah Jam Kerja" %>
+                    <%= form.text_field :jumlah_jam_kerja, required:true, placeholder: "Jumlah Jam", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :status_guru, "Status Guru" %>
+                    <%= form.text_field :status_guru, required:true, placeholder: "Status Guru", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :gaji_pokok, "Gaji Pokok" %>
+                    <%= form.text_field :gaji_pokok, required:true, placeholder: "Gaji Pokok", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :tunjangan, "Tunjangan" %>
+                    <%= form.text_field :tunjangan, required:true, placeholder: "Tunjangan", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :masa_kerja_siln, "Masa Kerja Siln" %>
+                    <%= form.text_field :masa_kerja_siln, required:true, placeholder: "Masa Kerja Siln", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :sk_kemdikbud_no, "Sk Kemdikbud No" %>
+                    <%= form.text_field :sk_kemdikbud_no, required:true, placeholder: "Sk Kemdikbud No", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :sk_siln_no, "SK Siln No" %>
+                    <%= form.text_field :sk_siln_no, required:true, placeholder: "SK Siln No", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :tgl_awal_penugasan, "Tgl Awal Penugasan" %>
+                    <%= form.date_field :tgl_awal_penugasan, required:true, placeholder: "Tgl Awal Penugasan", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :tgl_akhir_penugasan, "Tgl Akhir Penugasan" %>
+                    <%= form.date_field :tgl_akhir_penugasan, required:true, placeholder: "Tgl Akhir Penugasan", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :status_warga_negara, "Status Warga Negara" %>
+                    <%= form.text_field :status_warga_negara, required:true, placeholder: "Status Warga Negara", class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :document, "Document" %>
+                    <%= form.file_field :document, required:true, placeholder: "Document", class:"form-control" %>
+                  </div>         
+                  <div class="form-group">
+                    <%= form.label :photo, "Photo" %>
+                    <%= form.file_field :photo, required:true, placeholder: "Photo", class:"form-control" %>
+                  </div>         
+                  
+                  
+                  
 
                   <div class="actions">
                     <%= form.submit "Kirim", class:"btn btn-primary" %>
